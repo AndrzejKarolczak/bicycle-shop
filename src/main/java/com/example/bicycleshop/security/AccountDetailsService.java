@@ -1,0 +1,27 @@
+package com.example.bicycleshop.security;
+
+import com.example.bicycleshop.security.dao.AccountRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+@Transactional
+public class AccountDetailsService implements UserDetailsService {
+    private AccountRepository accountRepository;
+
+    @Autowired
+    public AccountDetailsService(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
+        return accountRepository.findByLogin(login)
+            .map(account -> new AccountDetails(account, accountRepository))
+            .orElseThrow(() -> new UsernameNotFoundException("Account not found: " + login));
+    }
+}
