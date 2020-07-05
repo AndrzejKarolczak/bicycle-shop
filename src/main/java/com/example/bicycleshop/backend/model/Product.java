@@ -44,6 +44,9 @@ public abstract class Product implements Serializable {
     private BigDecimal price;
 
     @Column
+    private String linkToPicture;
+
+    @Column
     private String description;
 
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},

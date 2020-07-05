@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -22,6 +23,8 @@ public class BicycleShopApplication implements CommandLineRunner {
     @Autowired
     private EntityManagerFactory emf;
 
+    @Autowired
+    PasswordEncoder passwordEncoder;
 //	@Autowired
 //	private AuthorityGroupRepository agr;
 
@@ -44,16 +47,20 @@ public class BicycleShopApplication implements CommandLineRunner {
 
         City warszawa = new City("Warsaw", poland);
         City bydgoszcz = new City("Bydgoszcz", poland);
+        City zerniki = new City("Żerniki", poland);
         em.persist(warszawa);
         em.persist(bydgoszcz);
+        em.persist(zerniki);
 
         Address clientAddress = new Address("Marszałkowska", "34", "1", "00-444", warszawa);
-        Address manufacturerAddress = new Address("Przemysłowa", "28B", "85-758", bydgoszcz);
+        Address unibikeAddress = new Address("Przemysłowa", "28B", "85-758", bydgoszcz);
+        Address shimanoAddress = new Address("Gutenberga", "9", "62-023 Gądki", zerniki);
         em.persist(clientAddress);
-        em.persist(manufacturerAddress);
+        em.persist(unibikeAddress);
+        em.persist(shimanoAddress);
 
         AuthorityGroup authorityGroup = em.find(AuthorityGroup.class, 3L);
-        Account account = new Account("a.karolczak", "a.karolczak", authorityGroup);
+        Account account = new Account("a.karolczak", passwordEncoder.encode("a.karolczak"), authorityGroup);
         account.setEnabled(true)
             .setCredentialsNonExpired(true)
             .setAccountNonExpired(true)
@@ -63,10 +70,11 @@ public class BicycleShopApplication implements CommandLineRunner {
         Individual client = new Individual("Andrzej", "Karolczak", clientAddress, "s17896@pjwstk.edu.pl", account);
         em.persist(client);
 
-        Organization unibike = new Organization("Unibike", manufacturerAddress, "biuro@unibike.pl", "554-008-33-57");
+        Organization unibike = new Organization("Unibike", unibikeAddress, "biuro@unibike.pl", "554-008-33-57");
         em.persist(unibike);
 
         Product bike = new Bicycle("VIPER GTS", new BigDecimal("3199.0"), BicycleType.CROSS, unibike);
+        bike.setLinkToPicture("https://www.unibike.pl/cross/vipergts/vipergtsgc.jpg");
         em.persist(bike);
 
         Order buyBicycleOrder = new Order(client, OrderStatus.PRELIMINARY);
@@ -77,8 +85,12 @@ public class BicycleShopApplication implements CommandLineRunner {
         buyBicycleOrder.addProductToOrder(bicycleInOrder);
         em.persist(bicycleInOrder);
 
-        Product part = new BicyclePart("Unibike nie robi łańcuchów", new BigDecimal("100.0"),
-            BicyclePartType.CHAIN, unibike);
+        Organization shimano = new Organization("Shimano Polska", shimanoAddress, "biuro@shimano.pl", "554-008-33-56");
+        em.persist(shimano);
+
+        Product part = new BicyclePart("SHIMANO DEORE XT CN-M8100 HG 12 SPEED CHAIN", new BigDecimal("100.0"),
+            BicyclePartType.CHAIN, shimano);
+        part.setLinkToPicture("https://www.rosebikes.pl/images/fEuV7EQhFBnPYR5rOfATwPJYTHVd3UC02fy_VYyP2z8/resize:fit:1800:1200:1/gravity:no/background:ffffff/aHR0cHM6Ly9pbWFnZXMucm9zZWJpa2VzLmRlL2dldF9pbWFnZS8_dD01Njg4Qzg3NTI4REExODY1MjQyMTE3RThGRkU5ODlDMw.jpeg");
         em.persist(part);
 
         Order buyPartOrder = new Order(client, OrderStatus.PRELIMINARY);

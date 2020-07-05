@@ -23,15 +23,6 @@ VALUES('t.wyrobnik', '$2y$12$540T3gKGe3MeT8H/sKhqu.tzmRUgj09s7dGLtsnWpjrXlV8v9Be
 INSERT INTO accounts(login, password, group_id)
 VALUES('e.niebezpieczna', '$2y$12$dJdwSTRDoz698Zbxiq3mGuTTLsqXBxrXct0uFf0FBtArF34kvlpbe', 3);
 
-
-
---UPDATE accounts
---SET 	is_account_non_expired = true,
---    	is_account_non_locked = true,
---        is_credentials_non_expired = true,
---        is_enabled = true
---WHERE user_name IN ('j.ospaly', 'e.niebezpieczna', 't.wyrobnik2');
-
 UPDATE accounts
 SET 	is_account_non_expired = true,
     	is_account_non_locked = true,

@@ -4,7 +4,9 @@ import com.example.bicycleshop.backend.model.BusinessEntity;
 import com.example.bicycleshop.helpers.ValidationMessages;
 import lombok.*;
 import lombok.experimental.Accessors;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -41,8 +43,7 @@ public class Account {
 
     public Account(String login, String password, AuthorityGroup authorityGroup) {
         this.login = login;
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        this.password = encoder.encode(password);;
+        this.password = password;
         this.authorityGroup = authorityGroup;
     }
 

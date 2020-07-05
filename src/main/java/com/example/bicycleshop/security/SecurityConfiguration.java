@@ -40,6 +40,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .headers().frameOptions().disable();
 
         http.authorizeRequests()
+            .antMatchers("/transaction/**").permitAll()
             .antMatchers("/start/**").hasAnyRole(Roles.EMPLOYEE.name(), Roles.MANAGER.name(), Roles.ADMINISTRATOR.name())
             .antMatchers("/managers/**").hasAnyRole(Roles.MANAGER.name(), Roles.ADMINISTRATOR.name())
             .antMatchers("/administrators/**").hasRole(Roles.ADMINISTRATOR.name())
