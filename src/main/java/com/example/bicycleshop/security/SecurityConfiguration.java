@@ -1,6 +1,5 @@
 package com.example.bicycleshop.security;
 
-import com.example.bicycleshop.security.Roles;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,39 +20,42 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 @NoArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    private UserDetailsService userDetailsService;
-
-    @Autowired
-    public SecurityConfiguration(UserDetailsService userDetailsService) {
-        this.userDetailsService = userDetailsService;
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/h2-console/**").permitAll()
-            .and()
-            .headers().frameOptions().disable();
-
-        http.authorizeRequests()
-            .antMatchers("/transaction/**").permitAll()
-            .antMatchers("/start/**").hasAnyRole(Roles.EMPLOYEE.name(), Roles.MANAGER.name(), Roles.ADMINISTRATOR.name())
-            .antMatchers("/managers/**").hasAnyRole(Roles.MANAGER.name(), Roles.ADMINISTRATOR.name())
-            .antMatchers("/administrators/**").hasRole(Roles.ADMINISTRATOR.name())
-            .and().csrf().disable()
-            .formLogin()
-            .and()
-            .logout().permitAll()
-            .and()
-            .exceptionHandling().accessDeniedPage("/access-denied");
-    }
-
-    @Bean
-    public PasswordEncoder getPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	private DataSource dataSource;
+	private UserDetailsService userDetailsService;
+	
+	@Autowired
+	public SecurityConfiguration(DataSource dataSource, UserDetailsService accountDetailsService) {
+		this.dataSource = dataSource;
+		this.userDetailsService = accountDetailsService;
+	}
+	
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService);
+	}
+	
+	@Override
+	protected void configure(HttpSecurity http) throws Exception { //TODO
+		http.authorizeRequests().antMatchers("/h2-console/**").permitAll()
+				.and()
+				.headers().frameOptions().disable();
+		
+		http.authorizeRequests()
+				.antMatchers("/").permitAll()
+				.antMatchers("/transaction/**").permitAll()
+//				.antMatchers("/start/**").hasAnyRole(Roles.EMPLOYEE.name(), Roles.MANAGER.name(), Roles.ADMINISTRATOR.name())
+//				.antMatchers("/managers/**").hasAnyRole(Roles.MANAGER.name(), Roles.ADMINISTRATOR.name())
+//				.antMatchers("/administrators/**").hasRole(Roles.ADMINISTRATOR.name())
+				.and().csrf().disable()
+				.formLogin()
+				.and()
+				.logout().permitAll()
+				.and()
+				.exceptionHandling().accessDeniedPage("/access-denied");
+	}
+	
+	@Bean
+	public PasswordEncoder getPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 }

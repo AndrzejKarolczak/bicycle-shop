@@ -2,16 +2,18 @@ package com.example.bicycleshop.security;
 
 import com.example.bicycleshop.security.dao.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+//@Primary
 @Service
 @Transactional
 public class AccountDetailsService implements UserDetailsService {
-    private AccountRepository accountRepository;
+    private final AccountRepository accountRepository;
 
     @Autowired
     public AccountDetailsService(AccountRepository accountRepository) {

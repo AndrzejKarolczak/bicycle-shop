@@ -16,8 +16,8 @@ import java.util.Set;
 
 @AllArgsConstructor
 public class AccountDetails implements UserDetails {
-    private Account account;
-    private AccountRepository accountRepository;
+    private final Account account;
+    private final AccountRepository accountRepository;
 
     @Override
     @Transactional

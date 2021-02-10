@@ -1,4 +1,4 @@
-package com.example.bicycleshop.backend.dao;
+package com.example.bicycleshop.backend.repository;
 
 import com.example.bicycleshop.backend.model.ProductInOrder;
 import com.example.bicycleshop.backend.model.ProductInOrderPrimaryKey;

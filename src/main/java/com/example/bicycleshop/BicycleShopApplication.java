@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.EntityManager;
@@ -18,7 +20,7 @@ import javax.persistence.EntityTransaction;
 import java.math.BigDecimal;
 
 @SpringBootApplication
-public class BicycleShopApplication implements CommandLineRunner {
+public class BicycleShopApplication extends  SpringBootServletInitializer implements CommandLineRunner {
 
     @Autowired
     private EntityManagerFactory emf;
@@ -32,6 +34,13 @@ public class BicycleShopApplication implements CommandLineRunner {
         SpringApplication.run(BicycleShopApplication.class, args);
     }
 
+    
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+                return application.sources(BicycleShopApplication.class);
+        
+    }
+    
     @Override
     public void run(String... args) throws Exception {
         insertInitialData();
