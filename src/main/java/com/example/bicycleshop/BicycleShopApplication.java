@@ -83,7 +83,7 @@ public class BicycleShopApplication extends  SpringBootServletInitializer implem
         em.persist(unibike);
 
         Product bike = new Bicycle("VIPER GTS", new BigDecimal("3199.0"), BicycleType.CROSS, unibike);
-        bike.setLinkToPicture("https://www.unibike.pl/cross/vipergts/vipergtsgc.jpg");
+        bike.setLinkToPicture("https://www.unibike.pl/cross/vipergts/vipergtsc_main.jpg");
         em.persist(bike);
 
         Order buyBicycleOrder = new Order(client, OrderStatus.PRELIMINARY);
@@ -97,7 +97,7 @@ public class BicycleShopApplication extends  SpringBootServletInitializer implem
         Organization shimano = new Organization("Shimano Polska", shimanoAddress, "biuro@shimano.pl", "554-008-33-56");
         em.persist(shimano);
 
-        Product part = new BicyclePart("SHIMANO DEORE XT CN-M8100 HG 12 SPEED CHAIN", new BigDecimal("100.0"),
+        Product part = new BicyclePart("SHIMANO DEORE XT CN-M8100 HG 12 SPEED CHAIN", new BigDecimal("100.99"),
             BicyclePartType.CHAIN, shimano);
         part.setLinkToPicture("https://www.rosebikes.pl/images/fEuV7EQhFBnPYR5rOfATwPJYTHVd3UC02fy_VYyP2z8/resize:fit:1800:1200:1/gravity:no/background:ffffff/aHR0cHM6Ly9pbWFnZXMucm9zZWJpa2VzLmRlL2dldF9pbWFnZS8_dD01Njg4Qzg3NTI4REExODY1MjQyMTE3RThGRkU5ODlDMw.jpeg");
         em.persist(part);

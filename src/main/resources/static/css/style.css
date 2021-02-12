@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 100%;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+thead tr {
+    text-align: center;
+}
+
+.numberColumn {
+    text-align: right;
+}
+
+.buttonColumn {
+    text-align: center;
+    width: 100px;
+}
+
+.pictureTd {
+    width: 70px;
+}
+
+.clear-float {
+    clear: both;
+}
+
+.basket-value-input {
+    width: 120px;
+    text-align: right;
+    background-color: white;
+    font-weight: bold;
+    border-color: white;
+    border-style: none;
+    color: black;
+}
+
+.label-bold {
+    font-weight: bold;
+    margin-right: 5px;
+}

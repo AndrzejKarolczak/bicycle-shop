@@ -40,6 +40,8 @@ public class Individual extends BusinessEntity {
         this.firstName = firstName;
         this.lastName = lastName;
     }
+    
+    
 
     @Override
     public String toString() {
@@ -51,5 +53,10 @@ public class Individual extends BusinessEntity {
             ", address=" + getAddress() +
 //            ", email='" + getEmail() + '\'' +
             '}';
+    }
+    
+    @Override
+    public String getName() {
+        return firstName + " " + lastName;
     }
 }

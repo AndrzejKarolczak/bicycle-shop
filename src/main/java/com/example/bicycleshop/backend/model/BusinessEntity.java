@@ -70,4 +70,6 @@ public abstract class BusinessEntity {
     public boolean isRegisteredClient() {
         return Objects.nonNull(account);
     }
+    
+    public abstract String getName();
 }
