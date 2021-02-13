@@ -87,9 +87,19 @@ public class RequestController {
 		return "order-cancelled-view";
 	}
 	
+	@GetMapping("/saved-customer-details")
+	public String showSavedCustomerDetailsPage() {
+		return "saved-customer-details-view";
+	}
+	
 	@GetMapping("/access-denied")
 	public String showAccessDeniedPage() {
 		return "access-denied-view";
+	}
+	
+	@GetMapping("/new-account")
+	public String showNewAccountPage() {
+		return "new-account-view";
 	}
 	
 	@GetMapping("/login")

@@ -17,12 +17,12 @@
 </head>
 <body>
 <div class="form-group">
-    <input type="password" id="password-first-${param.suffix}" name="passwordFirst" disabled
+    <input type="password" id="password-first-${param.suffix}" name="passwordFirst" ${param.disabled} ${param.required}
            class="form-control" placeholder="Podaj hasło" value=""/>
 </div>
 <div class="form-group">
-    <input type="password" id="password-second-${param.suffix}" name="passwordSecond" disabled
-           class="form-control" placeholder="Potwierdź hasło" value=""/>
+    <input type="password" id="password-second-${param.suffix}" name="passwordSecond" ${param.disabled}
+    ${param.required} class="form-control" placeholder="Potwierdź hasło" value=""/>
 </div>
 </body>
 </html>

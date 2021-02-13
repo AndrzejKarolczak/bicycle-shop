@@ -17,7 +17,7 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
-<body onload="disableSubmitButtonsOnEmptyBasket()">
+<body>
 
 <jsp:include page="header.jsp"/>
 
@@ -62,7 +62,7 @@
 
                                     <jsp:include page="email-phone-view.jsp"/>
 
-                                    <div class="form-group form-check" style="margin-top: 30px">
+                                    <div class="form-group form-check" style="margin-top: 30px" hidden>
                                         <input type="checkbox" class="form-check-input" id="register-me-1"
                                                name="register-me"
                                                onclick="enablePasswords(1)">
@@ -71,8 +71,8 @@
 
                                     <jsp:include page="passwords-view.jsp">
                                         <jsp:param name="suffix" value="1"/>
-                                        <jsp:param name="required" value=""/>
-                                        <jsp:param name="disabled" value="disabled"/>
+                                        <jsp:param name="required" value="required"/>
+                                        <jsp:param name="disabled" value=""/>
                                     </jsp:include>
                                 </div>
 
@@ -127,11 +127,11 @@
                                 </div>
                             </div>
                             <div class="buttons">
-                                <a class="btn btn-danger" onclick="clearBasketContents()"
-                                   href="<%=request.getContextPath()%>/order-cancelled?session=${customerDetails.sessionId}">
+                                <a class="btn btn-danger"
+                                   href="<%=request.getContextPath()%>/start">
                                     Anuluj</a>
-                                <input type="submit" class="btn btn-primary" value="Wybierz rodzaj płatności"
-                                       name="submit"/>
+                                <input type="submit" class="btn btn-primary"
+                                       value="Zapisz dane"/>
                             </div>
                         </form:form>
                     </div>
@@ -156,7 +156,7 @@
 
                                     <jsp:include page="email-phone-view.jsp"/>
 
-                                    <div class="form-group form-check" style="margin-top: 30px">
+                                    <div class="form-group form-check" style="margin-top: 30px" hidden>
                                         <input type="checkbox" class="form-check-input" id="register-me-2"
                                                name="register-me"
                                                onclick="enablePasswords(2)">
@@ -165,8 +165,8 @@
 
                                     <jsp:include page="passwords-view.jsp">
                                         <jsp:param name="suffix" value="2"/>
-                                        <jsp:param name="required" value=""/>
-                                        <jsp:param name="disabled" value="disabled"/>
+                                        <jsp:param name="required" value="required"/>
+                                        <jsp:param name="disabled" value=""/>
                                     </jsp:include>
                                 </div>
 
@@ -220,11 +220,11 @@
                                 </div>
                             </div>
                             <div class="buttons">
-                                <a class="btn btn-danger" onclick="clearBasketContents()"
-                                   href="<%=request.getContextPath()%>/order-cancelled?session=${customerDetails.sessionId}">
+                                <a class="btn btn-danger"
+                                   href="<%=request.getContextPath()%>/start">
                                     Anuluj</a>
-                                <input type="submit" class="btn btn-primary" value="Wybierz rodzaj płatności"
-                                       name="submit"/>
+                                <input type="submit" class="btn btn-primary"
+                                       value="Zapisz dane"/>
                             </div>
                         </form:form>
                     </div>

@@ -16,7 +16,7 @@
 
 </head>
 
-<body>
+<body onload="disableSubmitButtonsOnEmptyBasket()">
 
 <jsp:include page="header.jsp"/>
 
@@ -145,7 +145,7 @@ PayPo - kup teraz, zapłać za 30 dni </span>
     </div>
     <div>
         <input type="submit" form="cancel-order" class="btn btn-danger" value="Anuluj"/>
-        <input type="submit" form="proceed-payment" class="btn btn-success" value="Zapłać"/>
+        <input type="submit" name="submit" form="proceed-payment" class="btn btn-success" value="Zapłać"/>
     </div>
 
 </div>

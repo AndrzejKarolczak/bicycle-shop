@@ -26,7 +26,7 @@ function showBasketContents() {
         tbody.appendChild(row);
     }
 
-    if(localStorage.length > 0) {
+    if (localStorage.length > 0) {
         document.getElementById("clear-basket").hidden = false;
         document.getElementById("submit-order").hidden = false;
     } else {
@@ -115,4 +115,9 @@ function sendBasketContents() {
             nodes[i].value = basket;
         }
     }
+}
+
+function disableSubmitButtonsOnEmptyBasket() {
+    let nodes = document.getElementsByName("submit");
+    nodes.forEach(e => e.disabled = !(localStorage.length > 0));
 }
