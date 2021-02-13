@@ -9,7 +9,7 @@
     <script src="js/basket.js"></script>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
-<body onload="showAll()">
+<body onload="showBasketContents()">
 
 <jsp:include page="header.jsp"/>
 
@@ -41,9 +41,10 @@
     </div>
 
     <div style="float: right">
-        <input class="btn btn-danger" type="button" value="Wyczyść koszyk" onclick="clearAll()">
+        <input class="btn btn-danger" id="clear-basket" type="button" value="Wyczyść koszyk" onclick="clearBasketContents()">
         <a class="btn btn-primary" href="<%=request.getContextPath()%>/">Wróć do zakupów</a>
-        <a class="btn btn-success" href="<%=request.getContextPath()%>/order">Realizuj zamówienie</a>
+        <a class="btn btn-success" id="submit-order" href="<%=request.getContextPath()%>/customer-details">
+            Realizuj zamówienie</a>
     </div>
 </div>
 </body>

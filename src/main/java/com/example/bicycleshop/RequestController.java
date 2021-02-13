@@ -3,16 +3,16 @@ package com.example.bicycleshop;
 import com.example.bicycleshop.backend.entities.enums.ProductType;
 import com.example.bicycleshop.backend.services.CountryService;
 import com.example.bicycleshop.backend.services.ProductService;
+import com.example.bicycleshop.forms.CustomerDetailsForm;
+import com.example.bicycleshop.forms.PaymentDetailsForm;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 public class RequestController {
@@ -28,15 +28,18 @@ public class RequestController {
 	
 	@GetMapping({"/", "/start", "/index"})
 	public String showStartPage() {
-		return "start";
+		return "start-view";
 	}
 	
 	@GetMapping("/products")
-	public String showProductsPage(@RequestParam String productType, Model model) {
-		if(ProductType.valueOf(productType) == ProductType.BICYCLE){
+	public String showProductsPage(@RequestParam("productType") String productType, Model model) {
+		ProductType product = ProductType.valueOf(productType);
+		if (product == ProductType.BICYCLE) {
 			model.addAttribute("productType", "rowerów");
-		} else {
+		} else if (product == ProductType.PART) {
 			model.addAttribute("productType", "części rowerowych");
+		} else {
+			throw new IllegalArgumentException("1");
 		}
 		model.addAttribute("items", productService.getProductType(productType));
 		
@@ -48,26 +51,40 @@ public class RequestController {
 		return "basket-contents-view";
 	}
 	
-	@GetMapping("/order")
-	public String submitBasket(Model model) {
+	@GetMapping("/customer-details")
+	public String showCustomerDetailsPage(Model model) {
 		String sessionId = UUID.randomUUID().toString();
-//		sessions.put(sessionId, new Session(sessionId, basketContents));
-		model.addAttribute("session", sessionId);
 		model.addAttribute("countries", countryService.getCountries());
-		model.addAttribute("customerDetails", new CustomerDetailsForm());
+		model.addAttribute("customerDetails", new CustomerDetailsForm(sessionId));
 		return "customer-details-view";
 	}
 	
-	@PostMapping("/customer-details")
-	public String submitIndividualDetails(@ModelAttribute("employee") CustomerDetailsForm form, Model model) {
+	@PostMapping("/payment-details")
+	public String showPaymentDetailsPage(@ModelAttribute("customerDetails") CustomerDetailsForm form, Model model) {
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			BasketItem[] basketItems = mapper.readValue(form.getBasketContents(), BasketItem[].class);
+			List<BasketItem> basket = Arrays.asList(basketItems);
+			
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 		
+		model.addAttribute("session", form.getSessionId());
+		model.addAttribute("paymentDetails", new PaymentDetailsForm()); //TODO
 		return "payment-details-view";
 	}
 	
-	@PostMapping("/firm-details")
-	public String submitFirmDetails(Model model) {
+	@PostMapping("payment-successful")
+	public String showPaymentSuccessfulPage(@ModelAttribute("paymentDetails") PaymentDetailsForm form){
 		
-		return "payment-details-view";
+		return "payment-successful-view";
+	}
+	
+	@RequestMapping("order-cancelled")
+	public String showCancelledPage(@RequestParam("session") String sessionId){
+		
+		return "order-cancelled-view";
 	}
 	
 	@GetMapping("/access-denied")

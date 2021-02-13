@@ -10,6 +10,9 @@ public class BasketItem{
 	public int quantity;
 	public double price;
 	
+	public BasketItem() {
+	}
+	
 	public BasketItem(int id, int quantity, double price) {
 		this.id = id;
 		this.quantity = quantity;

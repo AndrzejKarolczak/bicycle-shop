@@ -1,9 +1,10 @@
 function saveItem(productId, name, quantity, price) {
     let item = {id: productId, name: name, quantity: quantity, price: parseFloat(price)};
     localStorage.setItem(productId, JSON.stringify(item));
+    alert("Produkt dodano do koszyka");
 }
 
-function showAll() {
+function showBasketContents() {
     let tbody = document.getElementById("list");
     while (tbody.firstChild) tbody.removeChild(tbody.firstChild);
     let basketValue = 0;
@@ -23,6 +24,14 @@ function showAll() {
         row = addButtonColumn(row, "-", `subtractPiece(${key})`, 'buttonColumn', 'btn btn-warning btn-sm');
         row = addButtonColumn(row, "x", `removeItem(${key})`, 'buttonColumn', 'btn btn-danger btn-sm');
         tbody.appendChild(row);
+    }
+
+    if(localStorage.length > 0) {
+        document.getElementById("clear-basket").hidden = false;
+        document.getElementById("submit-order").hidden = false;
+    } else {
+        document.getElementById("clear-basket").hidden = true;
+        document.getElementById("submit-order").hidden = true;
     }
 
     document.getElementById("basket-value").value = basketValue;
@@ -60,7 +69,7 @@ function addPiece(key) {
         localStorage.setItem(key, JSON.stringify(item));
     }
 
-    showAll();
+    showBasketContents();
 }
 
 function subtractPiece(key) {
@@ -74,17 +83,17 @@ function subtractPiece(key) {
         }
     }
 
-    showAll();
+    showBasketContents();
 }
 
 function removeItem(key) {
     localStorage.removeItem(key);
-    showAll();
+    showBasketContents();
 }
 
-function clearAll() {
+function clearBasketContents() {
     localStorage.clear();
-    showAll();
+    showBasketContents();
 }
 
 function sendBasketContents() {
@@ -99,7 +108,6 @@ function sendBasketContents() {
     }
 
     if (array.length > 0) {
-
         let basket = JSON.stringify(array)
         let nodes = document.getElementsByName("basketContents");
 

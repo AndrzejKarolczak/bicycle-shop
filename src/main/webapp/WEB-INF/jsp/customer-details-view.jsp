@@ -27,7 +27,7 @@
     <h3 class="text-center">Podaj dane</h3>
     <hr>
 
-    <div class="container register">
+    <div class="register">
         <div class="row">
             <div class="col-12 register-right">
                 <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
@@ -44,10 +44,11 @@
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="individual" role="tabpanel"
                          aria-labelledby="individual-tab">
-                        <form:form modelAttribute="customerDetails" action="customer-details" method="post"
+                        <%--@elvariable id="customerDetails" type=""--%>
+                        <form:form modelAttribute="customerDetails" action="payment-details" method="post"
                                    onsubmit="sendBasketContents()">
 
-                            <input type="hidden" name="sessionId" value="${session}"/>
+                            <input type="hidden" name="sessionId" value="${customerDetails.sessionId}"/>
                             <input type="hidden" name="basketContents"/>
 
                             <h3 class="register-heading">Osoba prywatna</h3>
@@ -71,8 +72,6 @@
                                     <jsp:include page="passwords-view.jsp">
                                         <jsp:param name="suffix" value="1"/>
                                     </jsp:include>
-
-                                    <input type="submit" class="btn btn-primary" value="Dalej"/>
                                 </div>
 
                                 <div class="col-md-4">
@@ -125,13 +124,20 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="buttons">
+                                <a class="btn btn-danger" onclick="clearBasketContents()"
+                                   href="<%=request.getContextPath()%>/order-cancelled?session=${customerDetails.sessionId}">
+                                    Anuluj</a>
+                                <input type="submit" class="btn btn-primary"
+                                       value="Wybierz rodzaj płatności"/>
+                            </div>
                         </form:form>
                     </div>
 
                     <div class="tab-pane fade show" id="firm" role="tabpanel" aria-labelledby="firm-tab">
-                        <form:form modelAttribute="customerDetails" action="customer-details" method="post"
+                        <form:form modelAttribute="customerDetails" action="payment-details" method="post"
                                    onsubmit="sendBasketContents()">
-                            <input type="hidden" name="sessionId" value="${session}"/>
+                            <input type="hidden" name="sessionId" value="${customerDetails.sessionId}"/>
                             <input type="hidden" name="basketContents"/>
 
                             <h3 class="register-heading">Firma</h3>
@@ -158,8 +164,6 @@
                                     <jsp:include page="passwords-view.jsp">
                                         <jsp:param name="suffix" value="2"/>
                                     </jsp:include>
-
-                                    <input type="submit" class="btn btn-primary" value="Dalej"/>
                                 </div>
 
                                 <div class="col-md-4">
@@ -211,14 +215,19 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="buttons">
+                                <a class="btn btn-danger" onclick="clearBasketContents()"
+                                   href="<%=request.getContextPath()%>/order-cancelled?session=${customerDetails.sessionId}">
+                                    Anuluj</a>
+                                <input type="submit" class="btn btn-primary"
+                                       value="Wybierz rodzaj płatności"/>
+                            </div>
                         </form:form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-
 </div>
 </body>
 

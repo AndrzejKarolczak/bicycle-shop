@@ -1,10 +1,12 @@
-package com.example.bicycleshop;
+package com.example.bicycleshop.forms;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class CustomerDetailsForm {
 	private String sessionId;
 	private String basketContents;
@@ -29,4 +31,8 @@ public class CustomerDetailsForm {
 	private String shippingPostalCode;
 	private Integer shippingCountry;
 	private String passwordFirst;
+	
+	public CustomerDetailsForm(String sessionId) {
+		this.sessionId = sessionId;
+	}
 }

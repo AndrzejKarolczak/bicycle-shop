@@ -20,7 +20,7 @@
 </div>
 
 <div class="form-group">
-    <input type="text" name="phone" required class="form-control" placeholder="Numer telefonu: 123-456-789"
+    <input type="tel" name="phone" required class="form-control" placeholder="Numer telefonu: 123-456-789"
            value="" pattern="^(?:\(?\?)?(?:[-\.\(\)\s]*(\d)){9}\)?$"/>
 </div>
 </body>

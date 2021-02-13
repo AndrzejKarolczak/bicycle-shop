@@ -1,7 +1,3 @@
-function firstAndLastNameRequired() {
-
-}
-
 function enablePasswords(suffix) {
     let checkBox = document.getElementById(`register-me-${suffix}`);
     let passwordFirst = document.getElementById(`password-first-${suffix}`);
