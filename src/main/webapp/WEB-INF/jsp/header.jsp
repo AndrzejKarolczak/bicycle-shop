@@ -16,9 +16,10 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #4747d4; margin-bottom: 10px;">
         <ul class="navbar-nav">
-            <li class="nav-item active"><a href="<%=request.getContextPath()%>/" class="nav-link">Strona główna</a></li>
-            <li class="nav-item"><a href="<%=request.getContextPath()%>/products" class="nav-link">Produkty</a></li>
-            <li class="nav-item dropdown">
+            <li class="nav-item active"><a href="<%=request.getContextPath()%>/start" class="nav-link">Strona główna</a></li>
+            <li class="nav-item"><a href="<%=request.getContextPath()%>/products?productType=BICYCLE" class="nav-link">Rowery</a></li>
+            <li class="nav-item"><a href="<%=request.getContextPath()%>/products?productType=PART" class="nav-link">Części rowerowe</a></li>
+<%--            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
                    aria-haspopup="true" aria-expanded="false">
                     Produkty
@@ -27,7 +28,7 @@
                     <a class="dropdown-item" href="#">Rowery</a>
                     <a class="dropdown-item" href="#">Części do rowerów</a>
                 </div>
-            </li>
+            </li>--%>
         </ul>
 
         <ul class="navbar-nav ml-auto">

@@ -12,40 +12,54 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
             crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="css/registration.css">
 </head>
 <body>
 <c:if test="${param.billing == 'true'}">
     <div class="form-group">
-        <input type="text" name="billing-street" required class="form-control" placeholder="Ulica *" value=""/>
-    </div>
-    <div class="form-group">
-        <input type="text" name="billing-building-number" required class="form-control" placeholder="Numer budynku *"
+        <input type="text" name="billingStreet" required class="form-control" placeholder="Ulica"
                value=""/>
     </div>
     <div class="form-group">
-        <input type="text" name="billing-suite-number" class="form-control" placeholder="Numer lokalu *" value=""/>
+        <input type="text" name="billingBuildingNumber" required class="form-control"
+               placeholder="Numer budynku" value=""/>
     </div>
     <div class="form-group">
-        <input type="text" name="billing-postal-code" required class="form-control" placeholder="Kod pocztowy: 00-000"
-               value="" pattern="[0-9]{2}-[0-9]{3}"/>
+        <input type="text" name="billingSuiteNumber" class="form-control" placeholder="Numer lokalu"
+               value=""/>
     </div>
+    <div class="form-group">
+        <input type="text" name="billingCity" required class="form-control" placeholder="Miasto"
+               value=""/>
+    </div>
+    <div class="form-group">
+        <input type="text" name="billingPostalCode" required class="form-control"
+               placeholder="Kod pocztowy: 00-000" value="" pattern="[0-9]{2}-[0-9]{3}"/>
+    </div>
+
 </c:if>
 
 <c:if test="${param.billing == 'false'}">
-<div class="form-group">
-    <input type="text" name="shipping-street" class="form-control" placeholder="Ulica *" value=""/>
-</div>
-<div class="form-group">
-    <input type="text" name="shipping-building-number" class="form-control" placeholder="Numer budynku *"
-           value=""/>
-</div>
-<div class="form-group">
-    <input type="text" name="shipping-suite-number" class="form-control" placeholder="Numer lokalu *" value=""/>
-</div>
-<div class="form-group">
-    <input type="text" name="shipping-postal-code" class="form-control" placeholder="Kod pocztowy: 00-000"
-           value="" pattern="[0-9]{2}-[0-9]{3}"/>
-</div>
+    <div class="form-group">
+        <input type="text" id="shipping-street-${param.suffix}" name="shippingStreet" class="form-control"
+               placeholder="Ulica" value=""/>
+    </div>
+    <div class="form-group">
+        <input type="text" id="shipping-building-number-${param.suffix}" name="shippingBuildingNumber"
+               class="form-control" placeholder="Numer budynku" value=""/>
+    </div>
+    <div class="form-group">
+        <input type="text" id="shipping-suite-number-${param.suffix}" name="shippingSuiteNumber" class="form-control"
+               placeholder="Numer lokalu" value=""/>
+    </div>
+    <div class="form-group">
+        <input type="text" id="shipping-city-${param.suffix}" name="shippingCity" class="form-control"
+               placeholder="Miasto" value=""/>
+    </div>
+    <div class="form-group">
+        <input type="text" id="shipping-postal-code-${param.suffix}" name="shippingPostalCode" class="form-control"
+               placeholder="Kod pocztowy: 00-000" value="" pattern="[0-9]{2}-[0-9]{3}"/>
+    </div>
 </c:if>
 </body>
 </html>

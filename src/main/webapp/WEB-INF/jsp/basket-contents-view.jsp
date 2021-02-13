@@ -43,9 +43,7 @@
     <div style="float: right">
         <input class="btn btn-danger" type="button" value="Wyczyść koszyk" onclick="clearAll()">
         <a class="btn btn-primary" href="<%=request.getContextPath()%>/">Wróć do zakupów</a>
-        <a class="btn btn-success" href="<%=request.getContextPath()%>/new-account">Realizuj zamówienie</a>
-<%--        TODO--%>
-        <%--        sendBasketContents('<%=request.getContextPath()%>/order')--%>
+        <a class="btn btn-success" href="<%=request.getContextPath()%>/order">Realizuj zamówienie</a>
     </div>
 </div>
 </body>

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ProductServiceImpl implements ProductService {
+class ProductServiceImpl implements ProductService {
 
 	private final ProductRepository productRepository;
 
@@ -20,6 +20,11 @@ public class ProductServiceImpl implements ProductService {
 	
 	public List<Product> getProducts(){
 		return productRepository.findAll();
+	}
+	
+	@Override
+	public List<Product> getProductType(String productType) {
+		return productRepository.getProductType(productType) ;
 	}
 	
 }

@@ -21,7 +21,7 @@
 
 <br>
 <div class="container">
-    <h3 class="text-center">Lista produktów</h3>
+    <h3 class="text-center">Lista ${productType}</h3>
     <hr>
 
     <table class="table table-bordered table-striped table-sm">

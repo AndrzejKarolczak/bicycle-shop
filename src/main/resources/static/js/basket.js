@@ -87,7 +87,7 @@ function clearAll() {
     showAll();
 }
 
-function sendBasketContents(address) {
+function sendBasketContents() {
     let array = [];
 
     for (let i = 0; i < localStorage.length; i++) {
@@ -99,14 +99,12 @@ function sendBasketContents(address) {
     }
 
     if (array.length > 0) {
-        console.log(JSON.stringify(array));
 
-        fetch(address, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(array)
-        });
+        let basket = JSON.stringify(array)
+        let nodes = document.getElementsByName("basketContents");
+
+        for (let i = 0; i < nodes.length; i++) {
+            nodes[i].value = basket;
+        }
     }
 }

@@ -1,5 +1,10 @@
 package com.example.bicycleshop;
 
+import lombok.Getter;
+import lombok.Setter;
+
+//@Getter
+//@Setter
 public class BasketItem{
 	public int id;
 	public int quantity;
@@ -14,23 +19,23 @@ public class BasketItem{
 	public int getId() {
 		return id;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public int getQuantity() {
 		return quantity;
 	}
-	
+
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	
+
 	public double getPrice() {
 		return price;
 	}
-	
+
 	public void setPrice(double price) {
 		this.price = price;
 	}

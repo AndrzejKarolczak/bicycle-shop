@@ -66,7 +66,7 @@
     border: none;
     background: #0062cc;
     border-radius: 1.5rem;
-    width: 28%;
+    width: 23%;
     float: right;
 }
 .register .nav-tabs .nav-link{
@@ -81,7 +81,7 @@
     border: none;
 }
 .register .nav-tabs .nav-link.active{
-    width: 100px;
+    width: 120px;
     color: #0062cc;
     border: 2px solid #0062cc;
     border-top-left-radius: 1.5rem;
@@ -92,4 +92,8 @@
     margin-top: 8%;
     margin-bottom: -15%;
     color: #495057;
+}
+
+input:required, select:required {
+    border: 2px solid red;
 }
