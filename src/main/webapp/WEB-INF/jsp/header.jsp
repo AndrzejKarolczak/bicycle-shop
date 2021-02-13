@@ -16,6 +16,7 @@
 <header>
     <nav class="navbar navbar-expand-md navbar-dark" style="background-color: #4747d4; margin-bottom: 10px;">
         <ul class="navbar-nav">
+            <li class="nav-item active"><a href="<%=request.getContextPath()%>/" class="nav-link">Strona główna</a></li>
             <li class="nav-item"><a href="<%=request.getContextPath()%>/products" class="nav-link">Produkty</a></li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -27,10 +28,13 @@
                     <a class="dropdown-item" href="#">Części do rowerów</a>
                 </div>
             </li>
-            <li class="nav-item"><a href="<%=request.getContextPath()%>/basket" class="nav-link">Koszyk</a></li>
-            <li class="nav-item"><a href="<%=request.getContextPath()%>/login" class="nav-link">Zaloguj</a></li>
         </ul>
 
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item "><a href="<%=request.getContextPath()%>/new-account" class="nav-link">Załóż konto</a></li>
+            <li class="nav-item "><a href="<%=request.getContextPath()%>/login" class="nav-link">Zaloguj</a></li>
+            <li class="nav-item "><a href="<%=request.getContextPath()%>/basket" class="nav-link">Koszyk</a></li>
+        </ul>
     </nav>
 </header>
 </body>

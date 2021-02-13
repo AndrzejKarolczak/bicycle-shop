@@ -1,11 +1,11 @@
 package com.example.bicycleshop;
 
-import com.example.bicycleshop.backend.model.*;
-import com.example.bicycleshop.backend.model.enums.BicyclePartType;
-import com.example.bicycleshop.backend.model.enums.BicycleType;
-import com.example.bicycleshop.backend.model.enums.OrderStatus;
-import com.example.bicycleshop.security.model.Account;
-import com.example.bicycleshop.security.model.AuthorityGroup;
+import com.example.bicycleshop.backend.entities.*;
+import com.example.bicycleshop.backend.entities.enums.BicyclePartType;
+import com.example.bicycleshop.backend.entities.enums.BicycleType;
+import com.example.bicycleshop.backend.entities.enums.OrderStatus;
+import com.example.bicycleshop.security.entities.Account;
+import com.example.bicycleshop.security.entities.AuthorityGroup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -50,9 +50,8 @@ public class BicycleShopApplication extends  SpringBootServletInitializer implem
         EntityManager em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         tx.begin();
-
-        Country poland = new Country("Poland");
-        em.persist(poland);
+        
+        Country poland = em.find(Country.class, 136L);
 
         City warszawa = new City("Warsaw", poland);
         City bydgoszcz = new City("Bydgoszcz", poland);

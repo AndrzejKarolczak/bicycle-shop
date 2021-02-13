@@ -1,11 +1,11 @@
 package com.example.bicycleshop.security;
 
-import com.example.bicycleshop.security.dao.AuthorityGroupRepository;
-import com.example.bicycleshop.security.dao.AuthorityRepository;
-import com.example.bicycleshop.security.dao.AccountRepository;
-import com.example.bicycleshop.security.model.Account;
-import com.example.bicycleshop.security.model.Authority;
-import com.example.bicycleshop.security.model.AuthorityGroup;
+import com.example.bicycleshop.security.repositories.AuthorityGroupRepository;
+import com.example.bicycleshop.security.repositories.AuthorityRepository;
+import com.example.bicycleshop.security.repositories.AccountRepository;
+import com.example.bicycleshop.security.entities.Account;
+import com.example.bicycleshop.security.entities.Authority;
+import com.example.bicycleshop.security.entities.AuthorityGroup;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

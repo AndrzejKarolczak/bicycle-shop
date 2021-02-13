@@ -4,34 +4,28 @@ function saveItem(productId, name, quantity, price) {
 }
 
 function showAll() {
-    if (checkBrowser()) {
-        let tbody = document.getElementById("list");
-        while (tbody.firstChild) tbody.removeChild(tbody.firstChild);
+    let tbody = document.getElementById("list");
+    while (tbody.firstChild) tbody.removeChild(tbody.firstChild);
+    let basketValue = 0;
 
-        for (let i = 0; i < localStorage.length; i++) {
-            let key = localStorage.key(i);
-            let item = JSON.parse(localStorage.getItem(key));
+    for (let i = 0; i < localStorage.length; i++) {
+        let key = localStorage.key(i);
+        let item = JSON.parse(localStorage.getItem(key));
+        basketValue += (item.quantity * item.price);
+        let row = document.createElement('tr');
+        row.setAttribute("id", key);
 
-            let row = document.createElement('tr');
-            row.setAttribute("id", key);
-
-            row = addColumn(row, `${i + 1}.`, 'numberColumn');
-            row = addColumn(row, item.name, null);
-            row = addColumn(row, item.quantity, 'numberColumn');
-            row = addColumn(row, item.price, 'numberColumn');
-            row = addButtonColumn(row, "+", `addPiece(${key})`, 'buttonColumn', 'btn btn-success btn-sm');
-            row = addButtonColumn(row, "-", `subtractPiece(${key})`, 'buttonColumn', 'btn btn-warning btn-sm');
-            row = addButtonColumn(row, "x", `removeItem(${key})`, 'buttonColumn', 'btn btn-danger btn-sm');
-            tbody.appendChild(row);
-        }
-
-    } else {
-        alert('Cannot save shopping list as your browser does not support HTML 5');
+        row = addColumn(row, `${i + 1}.`, 'numberColumn');
+        row = addColumn(row, item.name, null);
+        row = addColumn(row, item.quantity, 'numberColumn');
+        row = addColumn(row, item.price, 'numberColumn');
+        row = addButtonColumn(row, "+", `addPiece(${key})`, 'buttonColumn', 'btn btn-success btn-sm');
+        row = addButtonColumn(row, "-", `subtractPiece(${key})`, 'buttonColumn', 'btn btn-warning btn-sm');
+        row = addButtonColumn(row, "x", `removeItem(${key})`, 'buttonColumn', 'btn btn-danger btn-sm');
+        tbody.appendChild(row);
     }
-}
 
-function checkBrowser() {
-    return 'localStorage' in window && window['localStorage'] !== null;
+    document.getElementById("basket-value").value = basketValue;
 }
 
 function addColumn(row, innerText, className) {
@@ -91,4 +85,28 @@ function removeItem(key) {
 function clearAll() {
     localStorage.clear();
     showAll();
+}
+
+function sendBasketContents(address) {
+    let array = [];
+
+    for (let i = 0; i < localStorage.length; i++) {
+        let key = localStorage.key(i);
+        let item = JSON.parse(localStorage.getItem(key));
+        if (item.quantity > 0) {
+            array.push({id: item.id, quantity: item.quantity, price: item.price});
+        }
+    }
+
+    if (array.length > 0) {
+        console.log(JSON.stringify(array));
+
+        fetch(address, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(array)
+        });
+    }
 }

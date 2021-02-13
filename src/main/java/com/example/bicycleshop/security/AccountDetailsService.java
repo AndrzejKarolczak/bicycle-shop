@@ -1,8 +1,7 @@
 package com.example.bicycleshop.security;
 
-import com.example.bicycleshop.security.dao.AccountRepository;
+import com.example.bicycleshop.security.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
