@@ -1,5 +1,7 @@
-package com.example.bicycleshop;
+package com.example.bicycleshop.controllers;
 
+import com.example.bicycleshop.BasketItem;
+import com.example.bicycleshop.Session;
 import com.example.bicycleshop.backend.entities.enums.ProductType;
 import com.example.bicycleshop.backend.services.CountryService;
 import com.example.bicycleshop.backend.services.ProductService;
