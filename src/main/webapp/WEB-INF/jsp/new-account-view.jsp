@@ -7,7 +7,7 @@
 <head>
     <title>Dane do realizacji zamówienia</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <%--    <meta name="viewport" content="width=device-width, initial-scale=1.0">--%>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
           integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
@@ -29,7 +29,7 @@
 
     <div class="register">
         <div class="row">
-            <div class="col-12 register-right">
+            <div class="col-sm-12 register-right">
                 <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" id="individual-tab" data-toggle="tab" href="#individual" role="tab"
@@ -45,7 +45,8 @@
                     <div class="tab-pane fade show active" id="individual" role="tabpanel"
                          aria-labelledby="individual-tab">
                         <%--@elvariable id="customerDetails" type=""--%>
-                        <form:form id="individual" modelAttribute="customerDetails" action="payment-details" method="post"
+                        <form:form id="individual" modelAttribute="customerDetails" action="payment-details"
+                                   method="post"
                                    onsubmit="sendBasketContents()">
 
                             <input type="hidden" name="sessionId" value="${customerDetails.sessionId}"/>
@@ -117,13 +118,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="buttons">
-                                <a class="btn btn-danger"
-                                   href="<%=request.getContextPath()%>/start">
-                                    Anuluj</a>
-                                <input type="submit" class="btn btn-primary"
-                                       value="Zapisz dane"/>
-                            </div>
+
+                            <jsp:include page="components/cancell-and-submit-buttons-view.jsp">
+                                <jsp:param name="url" value='${request.getContextPath()}/start' />
+                                <jsp:param name="submit" value="Zapisz dane"/>
+                                <jsp:param name="onclick" value=""/>
+                            </jsp:include>
                         </form:form>
                     </div>
 
@@ -201,13 +201,12 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="buttons">
-                                <a class="btn btn-danger"
-                                   href="<%=request.getContextPath()%>/start">
-                                    Anuluj</a>
-                                <input type="submit" class="btn btn-primary"
-                                       value="Zapisz dane"/>
-                            </div>
+
+                            <jsp:include page="components/cancell-and-submit-buttons-view.jsp">
+                                <jsp:param name="url" value='${request.getContextPath()}/start'/>
+                                <jsp:param name="submit" value="Zapisz dane"/>
+                                <jsp:param name="onclick" value=""/>
+                            </jsp:include>
                         </form:form>
                     </div>
                 </div>

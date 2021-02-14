@@ -45,7 +45,8 @@
                     <div class="tab-pane fade show active" id="individual" role="tabpanel"
                          aria-labelledby="individual-tab">
                         <%--@elvariable id="customerDetails" type=""--%>
-                        <form:form id="individual" modelAttribute="customerDetails" action="payment-details" method="post"
+                        <form:form id="individual" modelAttribute="customerDetails" action="payment-details"
+                                   method="post"
                                    onsubmit="sendBasketContents()">
 
                             <input type="hidden" name="sessionId" value="${customerDetails.sessionId}"/>
@@ -121,13 +122,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="buttons">
-                                <a class="btn btn-danger" onclick="clearBasketContents()"
-                                   href="<%=request.getContextPath()%>/order-cancelled?session=${customerDetails.sessionId}">
-                                    Anuluj</a>
-                                <input type="submit" class="btn btn-primary" value="Wybierz rodzaj płatności"
-                                       name="submit"/>
-                            </div>
+
+                            <jsp:include page="components/cancell-and-submit-buttons-view.jsp">
+                                <jsp:param name="url"
+                                           value='${request.getContextPath()}/order-cancelled?session=${customerDetails.sessionId}'/>
+                                <jsp:param name="submit" value='Wybierz rodzaj płatności'/>
+                                <jsp:param name="onclick" value="onclick='clearBasketContents()'"/>
+                            </jsp:include>
                         </form:form>
                     </div>
 
@@ -209,13 +210,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="buttons">
-                                <a class="btn btn-danger" onclick="clearBasketContents()"
-                                   href="<%=request.getContextPath()%>/order-cancelled?session=${customerDetails.sessionId}">
-                                    Anuluj</a>
-                                <input type="submit" class="btn btn-primary" value="Wybierz rodzaj płatności"
-                                       name="submit"/>
-                            </div>
+
+                            <jsp:include page="components/cancell-and-submit-buttons-view.jsp">
+                                <jsp:param name="url"
+                                           value='${request.getContextPath()}/order-cancelled?session=${customerDetails.sessionId}'/>
+                                <jsp:param name="submit" value='Wybierz rodzaj płatności'/>
+                                <jsp:param name="onclick" value="onclick='clearBasketContents()'"/>
+                            </jsp:include>
                         </form:form>
                     </div>
                 </div>

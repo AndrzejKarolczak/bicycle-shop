@@ -5,7 +5,7 @@
 <html lang="pl">
 
 <head>
-    <title>Dane do realizacji zamówienia</title>
+    <title>Dane zapisane w systemie</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
@@ -24,7 +24,7 @@
 <br>
 
 <div class="container">
-    <h3 class="text-center">Podaj dane</h3>
+    <h3 class="text-center">Edytuj dane</h3>
     <hr>
 
     <div class="register">
@@ -63,17 +63,10 @@
 
                                     <jsp:include page="components/email-phone-view.jsp"/>
 
-                                    <div class="form-group form-check" style="margin-top: 30px">
-                                        <input type="checkbox" class="form-check-input" id="register-me-1"
-                                               name="register-me"
-                                               onclick="enablePasswords(1)">
-                                        <label class="form-check-label" for="register-me-1">Chcę założyć konto</label>
-                                    </div>
-
                                     <jsp:include page="components/passwords-view.jsp">
                                         <jsp:param name="suffix" value="1"/>
-                                        <jsp:param name="required" value=""/>
-                                        <jsp:param name="disabled" value="disabled"/>
+                                        <jsp:param name="required" value="required"/>
+                                        <jsp:param name="disabled" value=""/>
                                     </jsp:include>
                                 </div>
 
@@ -155,17 +148,10 @@
 
                                     <jsp:include page="components/email-phone-view.jsp"/>
 
-                                    <div class="form-group form-check" style="margin-top: 30px">
-                                        <input type="checkbox" class="form-check-input" id="register-me-2"
-                                               name="register-me"
-                                               onclick="enablePasswords(2)">
-                                        <label class="form-check-label" for="register-me-2">Chcę założyć konto</label>
-                                    </div>
-
                                     <jsp:include page="components/passwords-view.jsp">
                                         <jsp:param name="suffix" value="2"/>
-                                        <jsp:param name="required" value=""/>
-                                        <jsp:param name="disabled" value="disabled"/>
+                                        <jsp:param name="required" value="required"/>
+                                        <jsp:param name="disabled" value=""/>
                                     </jsp:include>
                                 </div>
 
