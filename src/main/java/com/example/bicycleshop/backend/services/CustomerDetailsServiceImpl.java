@@ -42,95 +42,111 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 	}
 	
 	@Override
-	public void save(CustomerDetailsDto form) {
-		if (form.getPasswordFirst().isEmpty()) {
-			processRegistration(form, null);
+	public BusinessEntity save(CustomerDetailsDto form) {
+		if (Objects.isNull(form.getPasswordFirst())) {
+			return processRegistration(form, null);
 		} else {
 			Account account = getSavedAccount(form.getEmail(), form.getPasswordFirst());
-			processRegistration(form, account);
+			return processRegistration(form, account);
 		}
 	}
 	
-	private void processRegistration(CustomerDetailsDto form, Account account) {
-		countryRepository
+	private BusinessEntity processRegistration(CustomerDetailsDto form, Account account) {
+		return countryRepository
 				.findById(form.getBillingCountry())
-				.map(c -> {
-					Optional<City> cityOrNot = cityRepository.getCityByName(c.getCountryId(), form.getBillingCity());
+				.map(country -> {
+					Optional<City> cityOrNot = cityRepository.getCityByName(country.getCountryId(),
+							form.getBillingCity().trim().toUpperCase());
 					
-					City city = getSavedCity(c, cityOrNot);
-					Address address = getSavedBillingAddress(form.getBillingStreet(), form.getBillingBuildingNumber(),
+					City city = getSavedCity(country, cityOrNot);
+					Address billingAddress = getSavedAddress(form.getBillingStreet(), form.getBillingBuildingNumber(),
 							form.getBillingSuiteNumber(), form.getBillingPostalCode(), city);
 					
-					if (Boolean.valueOf(form.getIsIndividual()) == Boolean.TRUE) {
-						getSavedIndividual(form.getBillingFirstName(), form.getBillingLastName(), address,
-								form.getEmail(), form.getPhone(), account);
+					Address shippingAddress;
+					if (hasShippingAddress(form)) {
+						shippingAddress = getShippingAddress(form);
 					} else {
-						getSavedOrganization(form.getBillingCompanyName(), address, form.getEmail(),
-								form.getTaxIdNumber(), form.getPhone(), account);
+						shippingAddress = billingAddress;
 					}
 					
-					return c;
-				})
-				.orElseThrow(() -> new NotFoundException(Country.class, form.getBillingCountry()));
+					BusinessEntity businessEntity;
+					if (Boolean.valueOf(form.getIsIndividual()) == Boolean.TRUE) {
+						businessEntity = getSavedIndividual(form.getBillingFirstName(), form.getBillingLastName(),
+								billingAddress, shippingAddress, form.getEmail(), form.getPhone(), account);
+					} else {
+						businessEntity = getSavedOrganization(form.getBillingCompanyName(), billingAddress,
+								shippingAddress, form.getEmail(), form.getTaxIdNumber(), form.getPhone(), account);
+					}
+					
+					return businessEntity;
+				}).orElseThrow(() -> new NotFoundException(Country.class, form.getBillingCountry()));
+	}
+	
+	private boolean hasShippingAddress(CustomerDetailsDto form) {
+		return !form.getShippingStreet().isEmpty() & !form.getShippingBuildingNumber().isEmpty() &
+				!form.getShippingPostalCode().isEmpty() & !form.getShippingCity().isEmpty();
 	}
 	
 	private City getSavedCity(Country country, Optional<City> optionalCity) {
 		City city;
-		if (optionalCity.isPresent())
-			city = optionalCity.get();
-		else {
-			city = new City("Warsaw", country);
-			cityRepository.save(city);
-		}
+		city = optionalCity.orElseGet(() -> cityRepository.save(new City("Warsaw", country)));
 		return city;
 	}
 	
-	private Address getSavedBillingAddress(String streetName, String buildingNumber, String suiteNumber, String postalCode, City city) {
-		Address address = new BillingAddress(streetName, buildingNumber, suiteNumber, postalCode, city);
-		return addressRepository.save(address);
+	private Address getSavedAddress(String streetName, String buildingNumber, String suiteNumber, String postalCode, City city) {
+		return addressRepository.save(new Address(streetName, buildingNumber, suiteNumber, postalCode, city));
 	}
-//	private Address getSavedBillingAddress(String streetName, String buildingNumber, String suiteNumber, String postalCode, City city) {
-//		Address address = new BillingAddress(streetName, buildingNumber, suiteNumber, postalCode, city);
-//		return addressRepository.save(address);
-//	}
 	
-	private BusinessEntity getSavedIndividual(String firstName, String lastName, Address address, String email,
-											  String phone, Account account) {
+	private Address getShippingAddress(CustomerDetailsDto form) {
+		return countryRepository
+				.findById(form.getShippingCountry())
+				.map(country -> {
+					Optional<City> cityOrNot = cityRepository.getCityByName(country.getCountryId(),
+							form.getShippingCity().trim().toUpperCase());
+					
+					City city = getSavedCity(country, cityOrNot);
+					return getSavedAddress(form.getShippingStreet(), form.getShippingBuildingNumber(),
+							form.getShippingSuiteNumber(), form.getShippingPostalCode(), city);
+				})
+				.orElseThrow(() -> new NotFoundException(Country.class, form.getBillingCountry()));
+	}
+	
+	private BusinessEntity getSavedIndividual(String firstName, String lastName, Address billingAddress,
+											  Address shippingAddress, String email, String phone, Account account) {
 		Individual client;
 		if (Objects.isNull(account))
-			client = new Individual(firstName, lastName, address, null, email, phone);
+			client = new Individual(firstName, lastName, billingAddress, shippingAddress, email, phone);
 		else
-			client = new Individual(firstName, lastName, address, null, email, phone, account);
+			client = new Individual(firstName, lastName, billingAddress, shippingAddress, email, phone, account);
 		
 		return individualRepository.saveAndFlush(client);
 	}
 	
-	private BusinessEntity getSavedOrganization(String name, Address address, String email, String taxIdNumber,
-												String phone, Account account) {
+	private BusinessEntity getSavedOrganization(String name, Address billingAddress, Address shippingAddress, String email,
+												String taxIdNumber, String phone, Account account) {
 		Organization organization;
 		if (Objects.isNull(account))
-			organization = new Organization(name, address, null, email, taxIdNumber, phone);
+			organization = new Organization(name, billingAddress, shippingAddress, email, taxIdNumber, phone);
 		else
-			organization = new Organization(name, address, null, email, taxIdNumber, phone, account);
+			organization = new Organization(name, billingAddress, shippingAddress, email, taxIdNumber, phone, account);
 		
 		return organizationRepository.saveAndFlush(organization);
 	}
 	
 	private Account getSavedAccount(String login, String rawPassword) {
 		return accountRepository.findByLogin(login)
-				.orElseGet(() ->
-						authorityGroupRepository.findById(Roles.CLIENT.getAuthorityGroupNumber())
-								.map(group -> {
-									Account account = new Account(login, passwordEncoder.encode(rawPassword), group);
-									account.setEnabled(true)
-											.setCredentialsNonExpired(true)
-											.setAccountNonExpired(true)
-											.setAccountNonLocked(true);
-									return accountRepository.save(account);
-								})
-								.orElseThrow(() -> new AccountAlreadyExists(login)));
+				.orElseGet(() -> authorityGroupRepository
+						.findById(Roles.CLIENT.getAuthorityGroupNumber())
+						.map(group -> {
+							Account account = new Account(login, passwordEncoder.encode(rawPassword), group);
+							account.setEnabled(true)
+									.setCredentialsNonExpired(true)
+									.setAccountNonExpired(true)
+									.setAccountNonLocked(true);
+							return accountRepository.save(account);
+						}).orElseThrow(() -> new AccountAlreadyExists(login)));
 	}
-	
+
 //	@Override
 //	public void update(CustomerDetailsDto form) {
 //		if (form.getPasswordFirst().isEmpty()) {

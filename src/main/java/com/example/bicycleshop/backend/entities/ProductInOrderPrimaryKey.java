@@ -5,23 +5,23 @@ import java.io.Serializable;
 public class ProductInOrderPrimaryKey implements Serializable {
     private static final long serialVersionUID = 9086627167426987610L;
 
-    private Product product;
+    private Long product;
 
-    private Order order;
+    private Long order;
 
     protected ProductInOrderPrimaryKey() {
     }
 
     public ProductInOrderPrimaryKey(Product product, Order order) {
-        this.product = product;
-        this.order = order;
+        this.product = product.getProductId();
+        this.order = order.getOrderId();
     }
 
-    public Product getProduct() {
+    public Long getProduct() {
         return product;
     }
 
-    public Order getOrder() {
+    public Long getOrder() {
         return order;
     }
 

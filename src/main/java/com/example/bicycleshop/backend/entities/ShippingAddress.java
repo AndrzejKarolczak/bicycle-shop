@@ -1,4 +1,4 @@
-package com.example.bicycleshop.backend.entities;
+/*package com.example.bicycleshop.backend.entities;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -23,4 +23,4 @@ public class ShippingAddress extends Address {
 	public ShippingAddress(String streetName, String buildingNumber, String postalCode, City city) {
 		super(streetName, buildingNumber, postalCode, city);
 	}
-}
+}*/

@@ -13,11 +13,11 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(name = "addresses")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING, name = "address_type")
+//@DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING, name = "address_type")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
-public abstract class Address {
+public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_id", updatable = false)

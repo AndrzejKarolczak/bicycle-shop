@@ -1,6 +1,8 @@
 package com.example.bicycleshop.controllers;
 
+import com.example.bicycleshop.backend.entities.Order;
 import com.example.bicycleshop.backend.services.CustomerDetailsService;
+import com.example.bicycleshop.backend.services.OrderService;
 import com.example.bicycleshop.dtos.BasketItem;
 import com.example.bicycleshop.Session;
 import com.example.bicycleshop.backend.entities.enums.ProductType;
@@ -23,12 +25,15 @@ public class RequestController {
 	private final ProductService productService;
 	private final CountryService countryService;
 	private final CustomerDetailsService customerDetailsService;
+	private final OrderService orderService;
 	
 	@Autowired
-	public RequestController(ProductService productService, CountryService countryService, CustomerDetailsService customerDetailsService) {
+	public RequestController(ProductService productService, CountryService countryService, CustomerDetailsService
+			customerDetailsService, OrderService orderService) {
 		this.productService = productService;
 		this.countryService = countryService;
 		this.customerDetailsService = customerDetailsService;
+		this.orderService = orderService;
 	}
 	
 	@GetMapping({"/", "/start", "/index"})
@@ -66,29 +71,22 @@ public class RequestController {
 	
 	@PostMapping("/payment-details")
 	public String showPaymentDetailsPage(@ModelAttribute("customerDetails") CustomerDetailsDto form, Model model) {
-		ObjectMapper mapper = new ObjectMapper();
-		try {
-			BasketItem[] basketItems = mapper.readValue(form.getBasketContents(), BasketItem[].class);
-			List<BasketItem> basket = Arrays.asList(basketItems);
-			
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		}
+		Order order = orderService.save(form);
 		
 		model.addAttribute("session", form.getSessionId());
-		model.addAttribute("paymentDetails", new PaymentDetailsDto()); //TODO
+		//model.addAttribute("paymentDetails", new PaymentDetailsDto()); //TODO
 		return "payment-details-view";
 	}
 	
 	@PostMapping("payment-successful")
-	public String showPaymentSuccessfulPage(@ModelAttribute("paymentDetails") PaymentDetailsDto form, Model model){
+	public String showPaymentSuccessfulPage(@ModelAttribute("paymentDetails") PaymentDetailsDto form, Model model) {
 		model.addAttribute("title", "Transakcja zrealizowana");
 		model.addAttribute("message", "Transakcja została zrealizowana");
 		return "message-view";
 	}
 	
 	@RequestMapping("order-cancelled")
-	public String showCancelledPage(@RequestParam("session") String sessionId, Model model){
+	public String showCancelledPage(@RequestParam("session") String sessionId, Model model) {
 		model.addAttribute("title", "Transakcja anulowana");
 		model.addAttribute("message", "Transakcja została anulowana");
 		return "message-view";
@@ -112,7 +110,7 @@ public class RequestController {
 	}
 	
 	@PostMapping("save-customer-details")
-	public String showCustomerDetailsSavedPage(@ModelAttribute("customerDetails") CustomerDetailsDto form, Model model){
+	public String showCustomerDetailsSavedPage(@ModelAttribute("customerDetails") CustomerDetailsDto form, Model model) {
 		customerDetailsService.save(form);
 		model.addAttribute("title", "Dane zapisano");
 		model.addAttribute("message", "Dane klienta zostały zapisane");

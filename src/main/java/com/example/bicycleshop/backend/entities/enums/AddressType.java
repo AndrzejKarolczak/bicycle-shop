@@ -1,3 +1,4 @@
+/*
 package com.example.bicycleshop.backend.entities.enums;
 
 import com.example.bicycleshop.backend.entities.BillingAddress;
@@ -16,3 +17,4 @@ public enum AddressType {
 		return discriminatorValue;
 	}
 }
+*/

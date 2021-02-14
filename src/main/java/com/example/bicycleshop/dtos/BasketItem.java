@@ -3,12 +3,12 @@ package com.example.bicycleshop.dtos;
 import lombok.Getter;
 import lombok.Setter;
 
-//@Getter
-//@Setter
+@Getter
+@Setter
 public class BasketItem{
-	public int id;
-	public int quantity;
-	public double price;
+	private long id;
+	private int quantity;
+	private double price;
 	
 	public BasketItem() {
 	}
@@ -19,27 +19,27 @@ public class BasketItem{
 		this.price = price;
 	}
 	
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	public int getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
-
-	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) {
-		this.price = price;
-	}
+//	public long getId() {
+//		return id;
+//	}
+//
+//	public void setId(long id) {
+//		this.id = id;
+//	}
+//
+//	public int getQuantity() {
+//		return quantity;
+//	}
+//
+//	public void setQuantity(int quantity) {
+//		this.quantity = quantity;
+//	}
+//
+//	public double getPrice() {
+//		return price;
+//	}
+//
+//	public void setPrice(double price) {
+//		this.price = price;
+//	}
 }

@@ -58,10 +58,9 @@ public class BicycleShopApplication extends  SpringBootServletInitializer implem
         em.persist(bydgoszcz);
         em.persist(zerniki);
 
-        Address clientAddress = new BillingAddress("Marszałkowska", "34", "1", "00-444", warszawa);
-        Address clientShippingAddress = new ShippingAddress("Marszałkowska", "34", "1", "00-444", warszawa);
-        Address unibikeAddress = new BillingAddress("Przemysłowa", "28B", "85-758", bydgoszcz);
-        Address shimanoAddress = new BillingAddress("Gutenberga", "9", "62-023 Gądki", zerniki);
+        Address clientAddress = new Address("Marszałkowska", "34", "1", "00-444", warszawa);
+        Address unibikeAddress = new Address("Przemysłowa", "28B", "85-758", bydgoszcz);
+        Address shimanoAddress = new Address("Gutenberga", "9", "62-023 Gądki", zerniki);
         em.persist(clientAddress);
         em.persist(unibikeAddress);
         em.persist(shimanoAddress);
@@ -74,10 +73,10 @@ public class BicycleShopApplication extends  SpringBootServletInitializer implem
             .setAccountNonLocked(true);
         em.persist(account);
 
-        Individual client = new Individual("Andrzej", "Karolczak", clientAddress, clientShippingAddress, "s17896@pjwstk.edu.pl", "666-666-666", account);
+        Individual client = new Individual("Andrzej", "Karolczak", clientAddress, clientAddress, "s17896@pjwstk.edu.pl", "666-666-666", account);
         em.persist(client);
 
-        Organization unibike = new Organization("Unibike", unibikeAddress, null, "biuro@unibike.pl", "554-008-33-57", "777-777-777");
+        Organization unibike = new Organization("Unibike", unibikeAddress, unibikeAddress, "biuro@unibike.pl", "554-008-33-57", "777-777-777");
         em.persist(unibike);
 
         Product bike = new Bicycle("VIPER GTS", new BigDecimal("3199.0"), BicycleType.CROSS, unibike);
@@ -92,7 +91,7 @@ public class BicycleShopApplication extends  SpringBootServletInitializer implem
         buyBicycleOrder.addProductToOrder(bicycleInOrder);
         em.persist(bicycleInOrder);
 
-        Organization shimano = new Organization("Shimano Polska", shimanoAddress, null, "biuro@shimano.pl", "554-008-33-56", "888-888-888");
+        Organization shimano = new Organization("Shimano Polska", shimanoAddress, shimanoAddress, "biuro@shimano.pl", "554-008-33-56", "888-888-888");
         em.persist(shimano);
 
         Product part = new BicyclePart("SHIMANO DEORE XT CN-M8100 HG 12 SPEED CHAIN", new BigDecimal("100.99"),
