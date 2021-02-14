@@ -38,8 +38,13 @@ public abstract class BusinessEntity {
     @NotNull(message = ValidationMessages.NOT_NULL)
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},
         fetch = FetchType.LAZY)
-    @JoinColumn(name = "address_id", unique = true, nullable = false)
-    private Address address;
+    @JoinColumn(name = "billing_address_id", unique = true, nullable = false)
+    private Address billingAddress;
+    
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},
+            fetch = FetchType.LAZY)
+    @JoinColumn(name = "shipping_address_id", unique = true)
+    private Address shippingAddress;
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},
         fetch = FetchType.LAZY)
@@ -50,14 +55,15 @@ public abstract class BusinessEntity {
         mappedBy = "client", fetch = FetchType.LAZY)
     private List<Order> orders = new ArrayList<>();
 
-    public BusinessEntity(Address address, String email, String phone) {
-        this.address = address;
+    public BusinessEntity(Address billingAddress, Address shippingAddress, String email, String phone) {
+        this.billingAddress = billingAddress;
+        this.shippingAddress = shippingAddress;
         this.email = email;
         this.phone = phone;
     }
 
-    public BusinessEntity(Address address, String email, String phone, Account account) {
-        this(address, email, phone);
+    public BusinessEntity(Address billingAddress, Address shippingAddress, String email, String phone, Account account) {
+        this(billingAddress, shippingAddress, email, phone);
         this.account = account;
     }
 

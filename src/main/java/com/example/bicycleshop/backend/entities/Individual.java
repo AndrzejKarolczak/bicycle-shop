@@ -26,14 +26,14 @@ public class Individual extends BusinessEntity {
     @Column(name = "last_name", nullable = false)
     private String lastName;
     
-    public Individual(String firstName, String lastName, Address address, String email, String phone) {
-        super(address, email, phone);
+    public Individual(String firstName, String lastName, Address billingAddress, Address shippingAddress,String email, String phone) {
+        super(billingAddress,shippingAddress, email, phone);
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public Individual(String firstName, String lastName, Address address, String email, String phone, Account account) {
-        super(address, email, phone, account);
+    public Individual(String firstName, String lastName, Address billingAddress, Address shippingAddress,String email, String phone, Account account) {
+        super(billingAddress, shippingAddress, email, phone, account);
         this.firstName = firstName;
         this.lastName = lastName;
     }
@@ -44,7 +44,7 @@ public class Individual extends BusinessEntity {
             "businessEntityId=" + getBusinessEntityId() +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
-            ", address=" + getAddress() +
+            ", address=" + getBillingAddress() +
 //            ", email='" + getEmail() + '\'' +
             '}';
     }

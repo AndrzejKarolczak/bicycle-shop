@@ -30,11 +30,16 @@ public class ProductInOrder {
     @Positive
     @Column(nullable = false)
     private int quantity;
+    
+    @Positive
+    @Column(nullable = false)
+    private double price;
 
-    public ProductInOrder(Product product, Order order, int quantity) {
+    public ProductInOrder(Product product, Order order, int quantity, double price) {
         this.product = product;
         this.order = order;
         this.quantity = quantity;
+        this.price = price;
     }
 
     @Override

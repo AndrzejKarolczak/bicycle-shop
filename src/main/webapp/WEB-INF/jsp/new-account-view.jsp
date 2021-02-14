@@ -133,7 +133,7 @@
                                    onsubmit="sendBasketContents()">
                             <input type="hidden" name="sessionId" value="${customerDetails.sessionId}"/>
                             <input type="hidden" name="basketContents"/>
-                            <input type="hidden" name="isIndividual" value="true"/>
+                            <input type="hidden" name="isIndividual" value="false"/>
 
                             <h3 class="register-heading">Firma</h3>
                             <div class="row register-form">

@@ -4,6 +4,7 @@ import com.example.bicycleshop.backend.entities.*;
 import com.example.bicycleshop.backend.entities.enums.BicyclePartType;
 import com.example.bicycleshop.backend.entities.enums.BicycleType;
 import com.example.bicycleshop.backend.entities.enums.OrderStatus;
+import com.example.bicycleshop.security.Roles;
 import com.example.bicycleshop.security.entities.Account;
 import com.example.bicycleshop.security.entities.AuthorityGroup;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +28,6 @@ public class BicycleShopApplication extends  SpringBootServletInitializer implem
 
     @Autowired
     PasswordEncoder passwordEncoder;
-//	@Autowired
-//	private AuthorityGroupRepository agr;
 
     public static void main(String[] args) {
         SpringApplication.run(BicycleShopApplication.class, args);
@@ -59,14 +58,15 @@ public class BicycleShopApplication extends  SpringBootServletInitializer implem
         em.persist(bydgoszcz);
         em.persist(zerniki);
 
-        Address clientAddress = new Address("Marszałkowska", "34", "1", "00-444", warszawa);
-        Address unibikeAddress = new Address("Przemysłowa", "28B", "85-758", bydgoszcz);
-        Address shimanoAddress = new Address("Gutenberga", "9", "62-023 Gądki", zerniki);
+        Address clientAddress = new BillingAddress("Marszałkowska", "34", "1", "00-444", warszawa);
+        Address clientShippingAddress = new ShippingAddress("Marszałkowska", "34", "1", "00-444", warszawa);
+        Address unibikeAddress = new BillingAddress("Przemysłowa", "28B", "85-758", bydgoszcz);
+        Address shimanoAddress = new BillingAddress("Gutenberga", "9", "62-023 Gądki", zerniki);
         em.persist(clientAddress);
         em.persist(unibikeAddress);
         em.persist(shimanoAddress);
 
-        AuthorityGroup authorityGroup = em.find(AuthorityGroup.class, 3L);
+        AuthorityGroup authorityGroup = em.find(AuthorityGroup.class, Roles.CLIENT.getAuthorityGroupNumber());
         Account account = new Account("a.karolczak", passwordEncoder.encode("a.karolczak"), authorityGroup);
         account.setEnabled(true)
             .setCredentialsNonExpired(true)
@@ -74,10 +74,10 @@ public class BicycleShopApplication extends  SpringBootServletInitializer implem
             .setAccountNonLocked(true);
         em.persist(account);
 
-        Individual client = new Individual("Andrzej", "Karolczak", clientAddress, "s17896@pjwstk.edu.pl", "666-666-666", account);
+        Individual client = new Individual("Andrzej", "Karolczak", clientAddress, clientShippingAddress, "s17896@pjwstk.edu.pl", "666-666-666", account);
         em.persist(client);
 
-        Organization unibike = new Organization("Unibike", unibikeAddress, "biuro@unibike.pl", "554-008-33-57", "777-777-777");
+        Organization unibike = new Organization("Unibike", unibikeAddress, null, "biuro@unibike.pl", "554-008-33-57", "777-777-777");
         em.persist(unibike);
 
         Product bike = new Bicycle("VIPER GTS", new BigDecimal("3199.0"), BicycleType.CROSS, unibike);
@@ -87,12 +87,12 @@ public class BicycleShopApplication extends  SpringBootServletInitializer implem
         Order buyBicycleOrder = new Order(client, OrderStatus.PRELIMINARY);
         em.persist(buyBicycleOrder);
 
-        ProductInOrder bicycleInOrder = new ProductInOrder(bike, buyBicycleOrder, 1);
+        ProductInOrder bicycleInOrder = new ProductInOrder(bike, buyBicycleOrder, 1, 3999);
         bike.addProductToOrder(bicycleInOrder);
         buyBicycleOrder.addProductToOrder(bicycleInOrder);
         em.persist(bicycleInOrder);
 
-        Organization shimano = new Organization("Shimano Polska", shimanoAddress, "biuro@shimano.pl", "554-008-33-56", "888-888-888");
+        Organization shimano = new Organization("Shimano Polska", shimanoAddress, null, "biuro@shimano.pl", "554-008-33-56", "888-888-888");
         em.persist(shimano);
 
         Product part = new BicyclePart("SHIMANO DEORE XT CN-M8100 HG 12 SPEED CHAIN", new BigDecimal("100.99"),
@@ -103,7 +103,7 @@ public class BicycleShopApplication extends  SpringBootServletInitializer implem
         Order buyPartOrder = new Order(client, OrderStatus.PRELIMINARY);
         em.persist(buyPartOrder);
 
-        ProductInOrder partInOrder = new ProductInOrder(part, buyPartOrder, 2);
+        ProductInOrder partInOrder = new ProductInOrder(part, buyPartOrder, 2, 100.99);
         part.addProductToOrder(partInOrder);
         buyPartOrder.addProductToOrder(partInOrder);
         em.persist(partInOrder);

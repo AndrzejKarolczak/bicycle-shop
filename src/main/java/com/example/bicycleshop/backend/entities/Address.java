@@ -12,10 +12,12 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "addresses")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(discriminatorType = DiscriminatorType.STRING, name = "address_type")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Setter
-public class Address {
+public abstract class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "address_id", updatable = false)
@@ -41,11 +43,7 @@ public class Address {
         fetch = FetchType.LAZY)
     @JoinColumn(name = "city_id", nullable = false)
     private City city;
-
-    @OneToOne(mappedBy = "address", fetch = FetchType.LAZY,
-        cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
-    private BusinessEntity businessEntity;
-
+    
     public Address(String streetName, String buildingNumber, String postalCode, City city) {
         this.streetName = streetName;
         this.buildingNumber = buildingNumber;
@@ -60,7 +58,15 @@ public class Address {
         this.postalCode = postalCode;
         this.city = city;
     }
-
+    
+    @OneToOne(mappedBy = "billingAddress", fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    private BusinessEntity businessEntityOfBillingAddress;
+    
+    @OneToOne(mappedBy = "shippingAddress", fetch = FetchType.LAZY,
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH})
+    private BusinessEntity businessEntityOfShippingAddress;
+    
     @Override
     public String toString() {
         return "Address{" +
