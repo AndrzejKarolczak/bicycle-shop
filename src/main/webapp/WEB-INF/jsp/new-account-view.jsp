@@ -19,7 +19,7 @@
 
 <body>
 
-<jsp:include page="header.jsp"/>
+<jsp:include page="components/header-view.jsp"/>
 
 <br>
 
@@ -45,7 +45,7 @@
                     <div class="tab-pane fade show active" id="individual" role="tabpanel"
                          aria-labelledby="individual-tab">
                         <%--@elvariable id="customerDetails" type=""--%>
-                        <form:form modelAttribute="customerDetails" action="payment-details" method="post"
+                        <form:form id="individual" modelAttribute="customerDetails" action="payment-details" method="post"
                                    onsubmit="sendBasketContents()">
 
                             <input type="hidden" name="sessionId" value="${customerDetails.sessionId}"/>
@@ -54,22 +54,15 @@
                             <h3 class="register-heading">Osoba prywatna</h3>
                             <div class="row register-form">
                                 <div class="col-md-4">
-                                    <jsp:include page="first-and-last-name-view.jsp">
+                                    <jsp:include page="components/first-and-last-name-view.jsp">
                                         <jsp:param name="billing" value="true"/>
                                         <jsp:param name="required" value="required"/>
                                         <jsp:param name="suffix" value="1"/>
                                     </jsp:include>
 
-                                    <jsp:include page="email-phone-view.jsp"/>
+                                    <jsp:include page="components/email-phone-view.jsp"/>
 
-                                    <div class="form-group form-check" style="margin-top: 30px" hidden>
-                                        <input type="checkbox" class="form-check-input" id="register-me-1"
-                                               name="register-me"
-                                               onclick="enablePasswords(1)">
-                                        <label class="form-check-label" for="register-me-1">Chcę założyć konto</label>
-                                    </div>
-
-                                    <jsp:include page="passwords-view.jsp">
+                                    <jsp:include page="components/passwords-view.jsp">
                                         <jsp:param name="suffix" value="1"/>
                                         <jsp:param name="required" value="required"/>
                                         <jsp:param name="disabled" value=""/>
@@ -77,14 +70,12 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <div class="form-group form-check" style="margin-top: 7px">
-                                        <input type="checkbox" class="form-check-input" id="include-shipping-1"
-                                               name="include-shipping-1" onclick="showShippingAddress(1)">
-                                        <label class="form-check-label" for="include-shipping-1">
-                                            Inny adres do wysyłki</label>
-                                    </div>
+                                    <jsp:include page="components/shipping-addres-checkbox-view.jsp">
+                                        <jsp:param name="suffix" value="1"/>
+                                    </jsp:include>
+
                                     <div style="margin-top: 23px">
-                                        <jsp:include page="address-view.jsp">
+                                        <jsp:include page="components/address-view.jsp">
                                             <jsp:param name="billing" value="true"/>
                                         </jsp:include>
                                     </div>
@@ -101,17 +92,17 @@
                                 </div>
 
                                 <div class="col-md-4" id="shipping-address-group-1" style="display: none">
-                                    <jsp:include page="first-and-last-name-view.jsp">
+                                    <jsp:include page="components/first-and-last-name-view.jsp">
                                         <jsp:param name="billing" value="false"/>
                                         <jsp:param name="suffix" value="1"/>
                                     </jsp:include>
 
-                                    <jsp:include page="company-name-view.jsp">
+                                    <jsp:include page="components/company-name-view.jsp">
                                         <jsp:param name="billing" value="false"/>
                                         <jsp:param name="suffix" value="1"/>
                                     </jsp:include>
 
-                                    <jsp:include page="address-view.jsp">
+                                    <jsp:include page="components/address-view.jsp">
                                         <jsp:param name="billing" value="false"/>
                                         <jsp:param name="suffix" value="1"/>
                                     </jsp:include>
@@ -137,7 +128,7 @@
                     </div>
 
                     <div class="tab-pane fade show" id="firm" role="tabpanel" aria-labelledby="firm-tab">
-                        <form:form modelAttribute="customerDetails" action="payment-details" method="post"
+                        <form:form id="firm" modelAttribute="customerDetails" action="payment-details" method="post"
                                    onsubmit="sendBasketContents()">
                             <input type="hidden" name="sessionId" value="${customerDetails.sessionId}"/>
                             <input type="hidden" name="basketContents"/>
@@ -145,25 +136,18 @@
                             <h3 class="register-heading">Firma</h3>
                             <div class="row register-form">
                                 <div class="col-md-4">
-                                    <jsp:include page="company-name-view.jsp">
+                                    <jsp:include page="components/company-name-view.jsp">
                                         <jsp:param name="billing" value="true"/>
                                     </jsp:include>
-                                    <jsp:include page="first-and-last-name-view.jsp">
+                                    <jsp:include page="components/first-and-last-name-view.jsp">
                                         <jsp:param name="billing" value="true"/>
                                         <jsp:param name="required" value=""/>
                                         <jsp:param name="suffix" value="2"/>
                                     </jsp:include>
 
-                                    <jsp:include page="email-phone-view.jsp"/>
+                                    <jsp:include page="components/email-phone-view.jsp"/>
 
-                                    <div class="form-group form-check" style="margin-top: 30px" hidden>
-                                        <input type="checkbox" class="form-check-input" id="register-me-2"
-                                               name="register-me"
-                                               onclick="enablePasswords(2)">
-                                        <label class="form-check-label" for="register-me-2">Chcę założyć konto</label>
-                                    </div>
-
-                                    <jsp:include page="passwords-view.jsp">
+                                    <jsp:include page="components/passwords-view.jsp">
                                         <jsp:param name="suffix" value="2"/>
                                         <jsp:param name="required" value="required"/>
                                         <jsp:param name="disabled" value=""/>
@@ -171,14 +155,12 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <div class="form-group form-check" style="margin-top: 7px">
-                                        <input type="checkbox" class="form-check-input" id="include-shipping-2"
-                                               name="include-shipping" onclick="showShippingAddress(2)">
-                                        <label class="form-check-label" for="include-shipping-2">
-                                            Inny adres do wysyłki</label>
-                                    </div>
+                                    <jsp:include page="components/shipping-addres-checkbox-view.jsp">
+                                        <jsp:param name="suffix" value="2"/>
+                                    </jsp:include>
+
                                     <div style="margin-top: 23px">
-                                        <jsp:include page="address-view.jsp">
+                                        <jsp:include page="components/address-view.jsp">
                                             <jsp:param name="billing" value="true"/>
                                         </jsp:include>
                                     </div>
@@ -194,15 +176,15 @@
                                 </div>
 
                                 <div class="col-md-4" id="shipping-address-group-2" style="display: none">
-                                    <jsp:include page="first-and-last-name-view.jsp">
+                                    <jsp:include page="components/first-and-last-name-view.jsp">
                                         <jsp:param name="billing" value="false"/>
                                         <jsp:param name="suffix" value="2"/>
                                     </jsp:include>
-                                    <jsp:include page="company-name-view.jsp">
+                                    <jsp:include page="components/company-name-view.jsp">
                                         <jsp:param name="billing" value="false"/>
                                         <jsp:param name="suffix" value="2"/>
                                     </jsp:include>
-                                    <jsp:include page="address-view.jsp">
+                                    <jsp:include page="components/address-view.jsp">
                                         <jsp:param name="billing" value="false"/>
                                         <jsp:param name="suffix" value="2"/>
                                     </jsp:include>

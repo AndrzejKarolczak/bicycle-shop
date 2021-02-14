@@ -18,7 +18,7 @@
 
 <body onload="disableSubmitButtonsOnEmptyBasket()">
 
-<jsp:include page="header.jsp"/>
+<jsp:include page="components/header-view.jsp"/>
 
 <br>
 <div class="container">

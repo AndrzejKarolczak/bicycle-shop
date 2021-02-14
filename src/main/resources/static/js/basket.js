@@ -26,14 +26,9 @@ function showBasketContents() {
         tbody.appendChild(row);
     }
 
-    if (localStorage.length > 0) {
-        document.getElementById("clear-basket").hidden = false;
-        document.getElementById("submit-order").hidden = false;
-    } else {
-        document.getElementById("clear-basket").hidden = true;
-        document.getElementById("submit-order").hidden = true;
-    }
-
+    let isBasketEmpty = !(localStorage.length > 0);
+    document.getElementById("clear-basket").hidden = isBasketEmpty;
+    document.getElementById("submit-order").hidden = isBasketEmpty;
     document.getElementById("basket-value").value = basketValue;
 }
 

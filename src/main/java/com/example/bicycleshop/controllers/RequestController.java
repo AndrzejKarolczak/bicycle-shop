@@ -90,7 +90,8 @@ public class RequestController {
 	}
 	
 	@GetMapping("/saved-customer-details")
-	public String showSavedCustomerDetailsPage() {
+	public String showSavedCustomerDetailsPage(Model model) {
+		model.addAttribute("countries", countryService.getCountries());
 		return "saved-customer-details-view";
 	}
 	
@@ -100,7 +101,8 @@ public class RequestController {
 	}
 	
 	@GetMapping("/new-account")
-	public String showNewAccountPage() {
+	public String showNewAccountPage(Model model) {
+		model.addAttribute("countries", countryService.getCountries());
 		return "new-account-view";
 	}
 	

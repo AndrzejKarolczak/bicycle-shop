@@ -11,7 +11,7 @@
 </head>
 <body onload="showBasketContents()">
 
-<jsp:include page="header.jsp"/>
+<jsp:include page="components/header-view.jsp"/>
 
 <br>
 <div id="main" class="container">
