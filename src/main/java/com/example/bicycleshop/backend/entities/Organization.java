@@ -26,14 +26,14 @@ public class Organization extends BusinessEntity {
     @Column(name = "tax_id_number", nullable = false, unique = true)
     private String taxIdNumber;
 
-    public Organization(String name, Address address, String email, String taxIdNumber) {
-        super(address, email);
+    public Organization(String name, Address address, String email, String taxIdNumber, String phone) {
+        super(address, email, phone);
         this.name = name;
         this.taxIdNumber = taxIdNumber;
     }
 
-    public Organization(String name, Address address, String email, String taxIdNumber, Account account) {
-        super(address, email, account);
+    public Organization(String name, Address address, String email, String taxIdNumber, String phone, Account account) {
+        super(address, email, phone, account);
         this.name = name;
         this.taxIdNumber = taxIdNumber;
     }

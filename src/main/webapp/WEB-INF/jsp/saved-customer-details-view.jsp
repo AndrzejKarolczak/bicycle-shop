@@ -140,6 +140,9 @@
                                     <jsp:include page="components/company-name-view.jsp">
                                         <jsp:param name="billing" value="true"/>
                                     </jsp:include>
+
+                                    <jsp:include page="components/tax-id-number-view.jsp"/>
+
                                     <jsp:include page="components/first-and-last-name-view.jsp">
                                         <jsp:param name="billing" value="true"/>
                                         <jsp:param name="required" value=""/>

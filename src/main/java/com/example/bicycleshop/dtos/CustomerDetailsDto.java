@@ -1,4 +1,4 @@
-package com.example.bicycleshop.forms;
+package com.example.bicycleshop.dtos;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,12 +7,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CustomerDetailsForm {
+public class CustomerDetailsDto {
 	private String sessionId;
 	private String basketContents;
+	private String isIndividual;
 	private String billingFirstName;
 	private String billingLastName;
 	private String billingCompanyName;
+	private String taxIdNumber;
 	private String email;
 	private String phone;
 	private String billingStreet;
@@ -20,7 +22,7 @@ public class CustomerDetailsForm {
 	private String billingSuiteNumber;
 	private String billingCity;
 	private String billingPostalCode;
-	private Integer billingCountry;
+	private Long billingCountry;
 	private String shippingFirstName;
 	private String shippingLastName;
 	private String shippingCompanyName;
@@ -29,10 +31,10 @@ public class CustomerDetailsForm {
 	private String shippingSuiteNumber;
 	private String shippingCity;
 	private String shippingPostalCode;
-	private Integer shippingCountry;
+	private Long shippingCountry;
 	private String passwordFirst;
 	
-	public CustomerDetailsForm(String sessionId) {
+	public CustomerDetailsDto(String sessionId) {
 		this.sessionId = sessionId;
 	}
 }

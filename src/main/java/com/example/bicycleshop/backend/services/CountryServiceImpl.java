@@ -1,6 +1,6 @@
 package com.example.bicycleshop.backend.services;
 
-import com.example.bicycleshop.backend.dtos.CountryDto;
+import com.example.bicycleshop.dtos.CountryDto;
 import com.example.bicycleshop.backend.repositories.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

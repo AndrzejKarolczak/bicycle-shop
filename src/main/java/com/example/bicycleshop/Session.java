@@ -1,5 +1,7 @@
 package com.example.bicycleshop;
 
+import com.example.bicycleshop.dtos.BasketItem;
+
 import java.util.List;
 
 public class Session {

@@ -45,12 +45,13 @@
                     <div class="tab-pane fade show active" id="individual" role="tabpanel"
                          aria-labelledby="individual-tab">
                         <%--@elvariable id="customerDetails" type=""--%>
-                        <form:form id="individual" modelAttribute="customerDetails" action="payment-details"
+                        <form:form id="individual" modelAttribute="customerDetails" action="save-customer-details"
                                    method="post"
                                    onsubmit="sendBasketContents()">
 
                             <input type="hidden" name="sessionId" value="${customerDetails.sessionId}"/>
                             <input type="hidden" name="basketContents"/>
+                            <input type="hidden" name="isIndividual" value="true"/>
 
                             <h3 class="register-heading">Osoba prywatna</h3>
                             <div class="row register-form">
@@ -128,10 +129,11 @@
                     </div>
 
                     <div class="tab-pane fade show" id="firm" role="tabpanel" aria-labelledby="firm-tab">
-                        <form:form id="firm" modelAttribute="customerDetails" action="payment-details" method="post"
+                        <form:form id="firm" modelAttribute="customerDetails" action="save-customer-details" method="post"
                                    onsubmit="sendBasketContents()">
                             <input type="hidden" name="sessionId" value="${customerDetails.sessionId}"/>
                             <input type="hidden" name="basketContents"/>
+                            <input type="hidden" name="isIndividual" value="true"/>
 
                             <h3 class="register-heading">Firma</h3>
                             <div class="row register-form">
@@ -139,6 +141,9 @@
                                     <jsp:include page="components/company-name-view.jsp">
                                         <jsp:param name="billing" value="true"/>
                                     </jsp:include>
+
+                                    <jsp:include page="components/tax-id-number-view.jsp"/>
+
                                     <jsp:include page="components/first-and-last-name-view.jsp">
                                         <jsp:param name="billing" value="true"/>
                                         <jsp:param name="required" value=""/>

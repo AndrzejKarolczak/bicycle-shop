@@ -25,23 +25,18 @@ public class Individual extends BusinessEntity {
     @NotBlank(message = ValidationMessages.NOT_BLANK)
     @Column(name = "last_name", nullable = false)
     private String lastName;
-
-    @Column(name = "tax_id_number", unique = true)
-    private String taxIdNumber;
-
-    public Individual(String firstName, String lastName, Address address, String email) {
-        super(address, email);
+    
+    public Individual(String firstName, String lastName, Address address, String email, String phone) {
+        super(address, email, phone);
         this.firstName = firstName;
         this.lastName = lastName;
     }
 
-    public Individual(String firstName, String lastName, Address address, String email, Account account) {
-        super(address, email, account);
+    public Individual(String firstName, String lastName, Address address, String email, String phone, Account account) {
+        super(address, email, phone, account);
         this.firstName = firstName;
         this.lastName = lastName;
     }
-    
-    
 
     @Override
     public String toString() {
@@ -49,7 +44,6 @@ public class Individual extends BusinessEntity {
             "businessEntityId=" + getBusinessEntityId() +
             ", firstName='" + firstName + '\'' +
             ", lastName='" + lastName + '\'' +
-            ", taxIdNumber='" + taxIdNumber + '\'' +
             ", address=" + getAddress() +
 //            ", email='" + getEmail() + '\'' +
             '}';

@@ -30,6 +30,10 @@ public abstract class BusinessEntity {
     @NotNull(message = ValidationMessages.NOT_NULL)
     @Column(nullable = false)
     private String email;
+    
+    @NotNull(message = ValidationMessages.NOT_NULL)
+    @Column(nullable = false)
+    private String phone;
 
     @NotNull(message = ValidationMessages.NOT_NULL)
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},
@@ -46,14 +50,14 @@ public abstract class BusinessEntity {
         mappedBy = "client", fetch = FetchType.LAZY)
     private List<Order> orders = new ArrayList<>();
 
-    public BusinessEntity(Address address, String email) {
+    public BusinessEntity(Address address, String email, String phone) {
         this.address = address;
         this.email = email;
+        this.phone = phone;
     }
 
-    public BusinessEntity(Address address, String email, Account account) {
-        this.email = email;
-        this.address = address;
+    public BusinessEntity(Address address, String email, String phone, Account account) {
+        this(address, email, phone);
         this.account = account;
     }
 

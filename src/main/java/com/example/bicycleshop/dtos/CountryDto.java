@@ -1,4 +1,4 @@
-package com.example.bicycleshop.backend.dtos;
+package com.example.bicycleshop.dtos;
 
 import com.example.bicycleshop.backend.entities.Country;
 import lombok.Getter;

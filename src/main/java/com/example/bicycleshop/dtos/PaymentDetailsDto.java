@@ -1,11 +1,11 @@
-package com.example.bicycleshop.forms;
+package com.example.bicycleshop.dtos;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class PaymentDetailsForm {
+public class PaymentDetailsDto {
 	private String billingFirstName;
 	private String billingLastName;
 	

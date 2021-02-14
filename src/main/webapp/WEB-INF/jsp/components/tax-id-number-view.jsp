@@ -15,13 +15,10 @@
     <link rel="stylesheet" type="text/css" href="css/registration.css">
 </head>
 <body>
-<c:if test="${param.billing == 'true'}">
 
-
-</c:if>
-
-<c:if test="${param.billing == 'false'}">
-
-</c:if>
+<div class="form-group">
+    <input type="tel" name="taxIdNumber" required class="form-control" placeholder="NIP: 123-456-78-90"
+           value="" pattern="[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}"/>
+</div>
 </body>
 </html>

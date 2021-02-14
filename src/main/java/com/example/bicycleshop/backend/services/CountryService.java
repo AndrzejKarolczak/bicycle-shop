@@ -1,6 +1,6 @@
 package com.example.bicycleshop.backend.services;
 
-import com.example.bicycleshop.backend.dtos.CountryDto;
+import com.example.bicycleshop.dtos.CountryDto;
 
 import java.util.List;
 

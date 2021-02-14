@@ -1,4 +1,4 @@
-package com.example.bicycleshop;
+package com.example.bicycleshop.dtos;
 
 import lombok.Getter;
 import lombok.Setter;

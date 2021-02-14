@@ -1,12 +1,13 @@
 package com.example.bicycleshop.controllers;
 
-import com.example.bicycleshop.BasketItem;
+import com.example.bicycleshop.backend.services.CustomerDetailsService;
+import com.example.bicycleshop.dtos.BasketItem;
 import com.example.bicycleshop.Session;
 import com.example.bicycleshop.backend.entities.enums.ProductType;
 import com.example.bicycleshop.backend.services.CountryService;
 import com.example.bicycleshop.backend.services.ProductService;
-import com.example.bicycleshop.forms.CustomerDetailsForm;
-import com.example.bicycleshop.forms.PaymentDetailsForm;
+import com.example.bicycleshop.dtos.CustomerDetailsDto;
+import com.example.bicycleshop.dtos.PaymentDetailsDto;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,13 @@ public class RequestController {
 	private final HashMap<String, Session> sessions = new HashMap<>();
 	private final ProductService productService;
 	private final CountryService countryService;
+	private final CustomerDetailsService customerDetailsService;
 	
 	@Autowired
-	public RequestController(ProductService productService, CountryService countryService) {
+	public RequestController(ProductService productService, CountryService countryService, CustomerDetailsService customerDetailsService) {
 		this.productService = productService;
 		this.countryService = countryService;
+		this.customerDetailsService = customerDetailsService;
 	}
 	
 	@GetMapping({"/", "/start", "/index"})
@@ -57,12 +60,12 @@ public class RequestController {
 	public String showCustomerDetailsPage(Model model) {
 		String sessionId = UUID.randomUUID().toString();
 		model.addAttribute("countries", countryService.getCountries());
-		model.addAttribute("customerDetails", new CustomerDetailsForm(sessionId));
+		model.addAttribute("customerDetails", new CustomerDetailsDto(sessionId));
 		return "customer-details-view";
 	}
 	
 	@PostMapping("/payment-details")
-	public String showPaymentDetailsPage(@ModelAttribute("customerDetails") CustomerDetailsForm form, Model model) {
+	public String showPaymentDetailsPage(@ModelAttribute("customerDetails") CustomerDetailsDto form, Model model) {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
 			BasketItem[] basketItems = mapper.readValue(form.getBasketContents(), BasketItem[].class);
@@ -73,20 +76,22 @@ public class RequestController {
 		}
 		
 		model.addAttribute("session", form.getSessionId());
-		model.addAttribute("paymentDetails", new PaymentDetailsForm()); //TODO
+		model.addAttribute("paymentDetails", new PaymentDetailsDto()); //TODO
 		return "payment-details-view";
 	}
 	
 	@PostMapping("payment-successful")
-	public String showPaymentSuccessfulPage(@ModelAttribute("paymentDetails") PaymentDetailsForm form){
-		
-		return "payment-successful-view";
+	public String showPaymentSuccessfulPage(@ModelAttribute("paymentDetails") PaymentDetailsDto form, Model model){
+		model.addAttribute("title", "Transakcja zrealizowana");
+		model.addAttribute("message", "Transakcja została zrealizowana");
+		return "message-view";
 	}
 	
 	@RequestMapping("order-cancelled")
-	public String showCancelledPage(@RequestParam("session") String sessionId){
-		
-		return "order-cancelled-view";
+	public String showCancelledPage(@RequestParam("session") String sessionId, Model model){
+		model.addAttribute("title", "Transakcja anulowana");
+		model.addAttribute("message", "Transakcja została anulowana");
+		return "message-view";
 	}
 	
 	@GetMapping("/saved-customer-details")
@@ -104,6 +109,14 @@ public class RequestController {
 	public String showNewAccountPage(Model model) {
 		model.addAttribute("countries", countryService.getCountries());
 		return "new-account-view";
+	}
+	
+	@PostMapping("save-customer-details")
+	public String showCustomerDetailsSavedPage(@ModelAttribute("customerDetails") CustomerDetailsDto form, Model model){
+		customerDetailsService.save(form);
+		model.addAttribute("title", "Dane zapisano");
+		model.addAttribute("message", "Dane klienta zostały zapisane");
+		return "message-view";
 	}
 	
 	@GetMapping("/login")
