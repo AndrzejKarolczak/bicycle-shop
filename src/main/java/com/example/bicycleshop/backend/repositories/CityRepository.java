@@ -10,10 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface CityRepository extends JpaRepository<City, Long> {
-	
-	@Query(nativeQuery = true,
-			value = "SELECT ci.* FROM CITIES ci JOIN COUNTRIES c ON ci.country_id = c.country_id WHERE c.country_id = :countryId AND upper(ci.name) = :cityName")
+	@Query("SELECT ci FROM City ci JOIN ci.country c WHERE c.countryId = :countryId AND ci.name = :cityName")
 	Optional<City> getCityByName(@Param("countryId") Long countryId, @Param("cityName") String cityName);
-	
-	
 }

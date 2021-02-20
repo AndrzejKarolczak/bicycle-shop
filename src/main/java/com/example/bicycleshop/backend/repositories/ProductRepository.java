@@ -10,7 +10,6 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-	@Query(nativeQuery = true,
-			value = "SELECT * FROM products WHERE product_type = :productType")
-	List<Product> getProductType(@Param("productType") String productType);
+	@Query("SELECT p FROM Product p WHERE TYPE(p) = :productType")
+	List<Product> getProductType(@Param("productType") Class<?> productType);
 }

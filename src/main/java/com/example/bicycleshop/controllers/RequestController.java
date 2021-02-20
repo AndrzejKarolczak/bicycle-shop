@@ -1,5 +1,7 @@
 package com.example.bicycleshop.controllers;
 
+import com.example.bicycleshop.backend.entities.Bicycle;
+import com.example.bicycleshop.backend.entities.BicyclePart;
 import com.example.bicycleshop.backend.entities.Order;
 import com.example.bicycleshop.backend.entities.enums.ProductType;
 import com.example.bicycleshop.backend.services.CountryService;
@@ -8,6 +10,7 @@ import com.example.bicycleshop.backend.services.OrderService;
 import com.example.bicycleshop.backend.services.ProductService;
 import com.example.bicycleshop.dtos.CustomerDetailsDto;
 import com.example.bicycleshop.dtos.PaymentDetailsDto;
+import com.example.bicycleshop.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,14 +42,17 @@ public class RequestController {
 	@GetMapping("/products")
 	public String showProductsPage(@RequestParam("productType") String productType, Model model) {
 		ProductType product = ProductType.valueOf(productType);
+		Class<?> productClassName;
 		if (product == ProductType.BICYCLE) {
+			productClassName = Bicycle.class;
 			model.addAttribute("productType", "rowerów");
 		} else if (product == ProductType.PART) {
+			productClassName = BicyclePart.class;
 			model.addAttribute("productType", "części rowerowych");
 		} else {
-			throw new IllegalArgumentException("1");
+			throw new NotFoundException(ProductType.class, productType); //TODO
 		}
-		model.addAttribute("items", productService.getProductType(productType));
+		model.addAttribute("items", productService.getProductType(productClassName));
 		
 		return "product-list-view";
 	}
