@@ -3,6 +3,7 @@ package com.example.bicycleshop.controllers;
 import com.example.bicycleshop.backend.entities.Bicycle;
 import com.example.bicycleshop.backend.entities.BicyclePart;
 import com.example.bicycleshop.backend.entities.Order;
+import com.example.bicycleshop.backend.entities.Product;
 import com.example.bicycleshop.backend.entities.enums.ProductType;
 import com.example.bicycleshop.backend.services.CountryService;
 import com.example.bicycleshop.backend.services.CustomerDetailsService;
@@ -41,20 +42,30 @@ public class RequestController {
 	
 	@GetMapping("/products")
 	public String showProductsPage(@RequestParam("productType") String productType, Model model) {
-		ProductType product = ProductType.valueOf(productType);
+		ProductType product;
+		try {
+			product = ProductType.valueOf(productType);
+		} catch (Exception e) {
+			throw new NotFoundException(ProductType.class, productType);
+		}
+		
 		Class<?> productClassName;
 		if (product == ProductType.BICYCLE) {
 			productClassName = Bicycle.class;
 			model.addAttribute("productType", "rowerów");
-		} else if (product == ProductType.PART) {
+		} else {
 			productClassName = BicyclePart.class;
 			model.addAttribute("productType", "części rowerowych");
-		} else {
-			throw new NotFoundException(ProductType.class, productType); //TODO
 		}
 		model.addAttribute("items", productService.getProductType(productClassName));
 		
 		return "product-list-view";
+	}
+	
+	@GetMapping("/product-details")
+	public String showProductDetailsPage(@RequestParam("id") Long id, Model model) {
+		model.addAttribute("product", productService.getProductsById(id));
+		return "product-details-view";
 	}
 	
 	@GetMapping({"/basket"})

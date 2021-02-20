@@ -31,11 +31,11 @@ public class OrderController {
 	}
 	
 	@GetMapping("/order-details")
-	public String showOrderDetails(@RequestParam("id") String id, Model model) {
-		Order order = orderService.getOrder(Long.parseLong(id));
+	public String showOrderDetails(@RequestParam("id") Long id, Model model) {
+		Order order = orderService.getOrder(id);
 		
-		//model.addAttribute("orders", orders);
-		return "orders-list-view";
+		model.addAttribute("orderDetails", order);
+		return "products-in-order-list-view";
 	}
 	
 }

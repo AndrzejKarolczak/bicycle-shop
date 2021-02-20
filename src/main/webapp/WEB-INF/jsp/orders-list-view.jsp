@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="pl">
@@ -46,13 +46,14 @@
                     <c:out value="${item.getOrderTimestampAsFormattedString()}"/>
                 </td>
                 <td class="rightAlignedColumn">
-                    <fmt:formatNumber type="number" pattern="###,###.##" value="${item.calculateOrderValue()}" />
+                    <fmt:formatNumber type="number" pattern="###,###.##" value="${item.calculateOrderValue()}"/>
                 </td>
                 <td>
                     <c:out value="${item.getOrderStatus().toString()}"/>
                 </td>
                 <td class="buttonColumn">
-                    <a href="<%=request.getContextPath()%>/order-details?id=${item.getOrderId()}" class="btn btn-info btn-sm">Zobacz</a>
+                    <a href="<%=request.getContextPath()%>/order-details?id=${item.getOrderId()}"
+                       class="btn btn-info btn-sm">Zobacz</a>
                 </td>
             </tr>
         </c:forEach>

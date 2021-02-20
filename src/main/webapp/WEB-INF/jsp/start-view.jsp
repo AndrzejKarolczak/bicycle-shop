@@ -17,7 +17,7 @@
 
 <div class="row">
     <div class="container">
-        <h1>Disclaimer</h1>
+        <h1>Strona główna</h1>
         <p>Niestety nie wszystko działa bezbłędnie</p>
         <ul>
             <li>Filtry dla list książek nie uwzględniają wildcards</li>

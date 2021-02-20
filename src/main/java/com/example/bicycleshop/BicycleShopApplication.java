@@ -78,34 +78,53 @@ public class BicycleShopApplication extends  SpringBootServletInitializer implem
 
         Organization unibike = new Organization("Unibike", unibikeAddress, unibikeAddress, "biuro@unibike.pl", "554-008-33-57", "777-777-777");
         em.persist(unibike);
-
-        Product bike = new Bicycle("VIPER GTS", new BigDecimal("3199.0"), BicycleType.CROSS, unibike);
-        bike.setLinkToPicture("https://www.unibike.pl/cross/vipergts/vipergtsc_main.jpg");
-        em.persist(bike);
+    
+        BigDecimal viperPrice  = new BigDecimal("3499.0");
+        Product viper = new Bicycle("VIPER GTS", viperPrice, BicycleType.CROSS, unibike);
+        viper.setLinkToPicture("https://www.unibike.pl/cross/vipergts/vipergtsc_main.jpg");
+        em.persist(viper);
+        
+        Product zetos = new Bicycle("ZETOS GTS", new BigDecimal("3979.00"), BicycleType.CROSS, unibike);
+        zetos.setLinkToPicture("https://www.unibike.pl/cross/zethosgts/zethosgts_main.jpg");
+        em.persist(zetos);
 
         Order buyBicycleOrder = new Order(client, OrderStatus.PRELIMINARY);
         em.persist(buyBicycleOrder);
 
-        ProductInOrder bicycleInOrder = new ProductInOrder(bike, buyBicycleOrder, 1, 3999);
-        bike.addProductToOrder(bicycleInOrder);
+        ProductInOrder bicycleInOrder = new ProductInOrder(viper, buyBicycleOrder, 1, viperPrice);
+        viper.addProductToOrder(bicycleInOrder);
         buyBicycleOrder.addProductToOrder(bicycleInOrder);
         em.persist(bicycleInOrder);
 
-        Organization shimano = new Organization("Shimano Polska", shimanoAddress, shimanoAddress, "biuro@shimano.pl", "554-008-33-56", "888-888-888");
+        Organization shimano = new Organization("Shimano Polska", shimanoAddress, shimanoAddress, "biuro@shimano.pl",
+            "554-008-33-56", "888-888-888");
         em.persist(shimano);
-
-        Product part = new BicyclePart("SHIMANO DEORE XT CN-M8100 HG 12 SPEED CHAIN", new BigDecimal("100.99"),
+        
+        BigDecimal brakePrice = new BigDecimal("110.99");
+        Product brake = new BicyclePart("SHIMANO Acera/Altus BR-MT200 rear disc brake caliper", brakePrice,
+            BicyclePartType.REAR_BRAKE, shimano);
+        brake.setLinkToPicture("https://www.rosebikes.pl/images/-5ZkExzBAP_V0PbRxyjq3IJQvH80domuOqD34s_0fuk/resize:fit:1800:1200:1/gravity:no/aHR0cHM6Ly9pbWFnZXMucm9zZWJpa2VzLmRlL2dldF9pbWFnZS8_dD1EMEI0MTAzQTM4Qjk2MkZBRTZGRDU4NTU5M0REQkVCRQ.jpg");
+        em.persist(brake);
+    
+        BigDecimal chainPrice = new BigDecimal("100.99");
+        Product chain = new BicyclePart("SHIMANO DEORE XT CN-M8100 HG 12 SPEED CHAIN", chainPrice,
             BicyclePartType.CHAIN, shimano);
-        part.setLinkToPicture("https://www.rosebikes.pl/images/fEuV7EQhFBnPYR5rOfATwPJYTHVd3UC02fy_VYyP2z8/resize:fit:1800:1200:1/gravity:no/background:ffffff/aHR0cHM6Ly9pbWFnZXMucm9zZWJpa2VzLmRlL2dldF9pbWFnZS8_dD01Njg4Qzg3NTI4REExODY1MjQyMTE3RThGRkU5ODlDMw.jpeg");
-        em.persist(part);
+        chain.setLinkToPicture("https://www.rosebikes.pl/images/fEuV7EQhFBnPYR5rOfATwPJYTHVd3UC02fy_VYyP2z8/resize:fit:1800:1200:1/gravity:no/background:ffffff/aHR0cHM6Ly9pbWFnZXMucm9zZWJpa2VzLmRlL2dldF9pbWFnZS8_dD01Njg4Qzg3NTI4REExODY1MjQyMTE3RThGRkU5ODlDMw.jpeg");
+        em.persist(chain);
 
         Order buyPartOrder = new Order(client, OrderStatus.PRELIMINARY);
         em.persist(buyPartOrder);
 
-        ProductInOrder partInOrder = new ProductInOrder(part, buyPartOrder, 2, 100.99);
-        part.addProductToOrder(partInOrder);
-        buyPartOrder.addProductToOrder(partInOrder);
-        em.persist(partInOrder);
+        ProductInOrder chainInOrder = new ProductInOrder(chain, buyPartOrder, 2, chainPrice);
+        chain.addProductToOrder(chainInOrder);
+        buyPartOrder.addProductToOrder(chainInOrder);
+        em.persist(chainInOrder);
+    
+        ProductInOrder brakeInOrder = new ProductInOrder(brake, buyPartOrder, 1, brakePrice);
+        brake.addProductToOrder(brakeInOrder);
+        buyPartOrder.addProductToOrder(brakeInOrder);
+        em.persist(brakeInOrder);
+        
         tx.commit();
     }
 }

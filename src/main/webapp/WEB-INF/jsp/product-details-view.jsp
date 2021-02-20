@@ -5,7 +5,7 @@
 <html lang="pl">
 
 <head>
-    <title>Lista produktów</title>
+    <title>Karta produktu</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
@@ -22,14 +22,13 @@
 
 <br>
 <div class="container">
-    <h3 class="text-center">Lista ${productType}</h3>
+    <h3 class="text-center">${product.getName()}</h3>
     <hr>
 
     <table class="table table-bordered table-striped table-sm">
         <thead class="thead-dark">
         <tr>
             <th>&nbsp</th>
-            <th>Nazwa produktu</th>
             <th>Producent</th>
             <th>Kod produktu</th>
             <th>Cena</th>
@@ -37,31 +36,27 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="item" items="${items}">
+
             <tr>
                 <td class="pictureTd">
-                    <img src="${item.linkToPicture}" height="70" width="70" alt="Obraz produktu"/>
+                    <img src="${product.linkToPicture}" height="70" width="70" alt="Obraz produktu"/>
                 </td>
                 <td>
-                    <c:out value="${item.name}"/>
+                    <c:out value="${product.getManufacturer().getName()}"/>
                 </td>
                 <td>
-                    <c:out value="${item.getManufacturer().getName()}"/>
-                </td>
-                <td>
-                    <c:out value="${item.code}"/>
+                    <c:out value="${product.getCode()}"/>
                 </td>
                 <td class="rightAlignedColumn">
-                        <fmt:formatNumber type="number" pattern="###,###.##" value="${item.getPrice()}"/>
+                        <fmt:formatNumber type="number" pattern="###,###.##" value="${product.getPrice()}"/>
                 <td class="buttonColumn">
                     <input class="btn btn-primary btn-sm" type="button" data-toggle="modal" data-target="#exampleModal"
                            value="Dodaj do koszyka"
-                           onclick="saveItem(<c:out value="${item.productId}"/>,
-                                   '<c:out value="${item.name}"/>', 1, <c:out value="${item.price}"/>)" />
+                           onclick="saveItem(<c:out value="${product.productId}"/>,
+                                   '<c:out value="${product.name}"/>', 1, <c:out value="${product.price}"/>)" />
 
                 </td>
             </tr>
-        </c:forEach>
 
         </tbody>
     </table>

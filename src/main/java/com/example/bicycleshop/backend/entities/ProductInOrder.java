@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.Positive;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "products_in_orders")
@@ -33,9 +34,9 @@ public class ProductInOrder {
     
     @Positive
     @Column(nullable = false)
-    private double price;
+    private BigDecimal price;
 
-    public ProductInOrder(Product product, Order order, int quantity, double price) {
+    public ProductInOrder(Product product, Order order, int quantity, BigDecimal price) {
         this.product = product;
         this.order = order;
         this.quantity = quantity;

@@ -41,10 +41,35 @@
     </div>
 
     <div style="float: right">
-        <input class="btn btn-danger" id="clear-basket" type="button" value="Wyczyść koszyk" onclick="clearBasketContents()">
+        <input class="btn btn-danger" id="clear-basket" type="button" value="Wyczyść koszyk"
+               onclick="clearBasketContents()">
         <a class="btn btn-primary" href="<%=request.getContextPath()%>/">Wróć do zakupów</a>
-        <a class="btn btn-success" id="submit-order" href="<%=request.getContextPath()%>/customer-details">
-            Realizuj zamówienie</a>
+        <%--        <a class="btn btn-success" id="submit-order" href="<%=request.getContextPath()%>/customer-details">
+                    Realizuj zamówienie</a>--%>
+        <button type="button" class="btn btn-success" id="submit-order" data-toggle="modal" data-target="#exampleModal">
+            Realizuj zamówienie
+        </button>
+
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Wybierz opcję</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <form id="login" method="post" action="<%=request.getContextPath()%>/login"> <%--TODO--%>
+                        <button type="submit" class="btn btn-secondary">Zaloguj</button>
+                    </form>
+                    <a href="<%=request.getContextPath()%>/customer-details"
+                       class="btn btn-primary">Jestem niezarejestrowanym klientem</a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>

@@ -8,4 +8,6 @@ public interface ProductService {
 	List<Product> getProducts();
 	
 	List<Product> getProductType(Class<?> productType);
+	
+	Product getProductsById(Long id);
 }

@@ -1,7 +1,7 @@
 function saveItem(productId, name, quantity, price) {
     let item = {id: productId, name: name, quantity: quantity, price: parseFloat(price)};
     localStorage.setItem(productId, JSON.stringify(item));
-    alert("Produkt dodano do koszyka");
+    //alert("Produkt dodano do koszyka");
 }
 
 function showBasketContents() {
@@ -16,10 +16,10 @@ function showBasketContents() {
         let row = document.createElement('tr');
         row.setAttribute("id", key);
 
-        row = addColumn(row, `${i + 1}.`, 'numberColumn');
+        row = addColumn(row, `${i + 1}.`, 'rightAlignedColumn');
         row = addColumn(row, item.name, null);
-        row = addColumn(row, item.quantity, 'numberColumn');
-        row = addColumn(row, item.price, 'numberColumn');
+        row = addColumn(row, item.quantity, 'rightAlignedColumn');
+        row = addColumn(row, item.price.toFixed(2), 'rightAlignedColumn');
         row = addButtonColumn(row, "+", `addPiece(${key})`, 'buttonColumn', 'btn btn-success btn-sm');
         row = addButtonColumn(row, "-", `subtractPiece(${key})`, 'buttonColumn', 'btn btn-warning btn-sm');
         row = addButtonColumn(row, "x", `removeItem(${key})`, 'buttonColumn', 'btn btn-danger btn-sm');
@@ -29,7 +29,7 @@ function showBasketContents() {
     let isBasketEmpty = !(localStorage.length > 0);
     document.getElementById("clear-basket").hidden = isBasketEmpty;
     document.getElementById("submit-order").hidden = isBasketEmpty;
-    document.getElementById("basket-value").value = basketValue;
+    document.getElementById("basket-value").value = basketValue.toFixed(2);
 }
 
 function addColumn(row, innerText, className) {

@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletRequest;
 public class ErrorHandlerController {
 	private final Log logger = LogFactory.getLog(ErrorHandlerController.class);
 	
-	@ResponseBody
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ExceptionHandler(NotFoundException.class)
 	public String notFoundHandler(HttpServletRequest request, NotFoundException exception, Model model) {
