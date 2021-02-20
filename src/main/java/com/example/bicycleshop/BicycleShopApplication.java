@@ -51,9 +51,9 @@ public class BicycleShopApplication extends  SpringBootServletInitializer implem
         
         Country poland = em.find(Country.class, 136L);
 
-        City warszawa = new City("Warsaw", poland);
-        City bydgoszcz = new City("Bydgoszcz", poland);
-        City zerniki = new City("Żerniki", poland);
+        City warszawa = new City("WARSAW", poland);
+        City bydgoszcz = new City("BYDGOSZCZ", poland);
+        City zerniki = new City("ŻERNIKI", poland);
         em.persist(warszawa);
         em.persist(bydgoszcz);
         em.persist(zerniki);

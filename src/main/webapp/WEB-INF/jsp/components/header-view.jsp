@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,12 +37,41 @@
         </ul>
 
         <ul class="navbar-nav ml-auto">
+            <sec:authorize access="isAuthenticated()">
+                <li class="nav-item" style="margin-right: 20px">
+                    <span class="navbar-text">
+                        Zalogowany użytkownik: <sec:authentication property="principal.username"/> -
+                    </span>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false">
+                        Konto
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" href="<%=request.getContextPath()%>/saved-customer-details">Dane</a>
+                        <a class="dropdown-item" href="<%=request.getContextPath()%>/orders-list">Zamówienia</a>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <form id="logout" method="post" action="<%=request.getContextPath()%>/logout">
+                        <a href="javascript:{}" onclick="document.getElementById('logout').submit(); return false;"
+                           class="nav-link">Wyloguj</a>
+                    </form>
+                </li>
+            </sec:authorize>
+            <sec:authorize access="isAnonymous()">
             <li class="nav-item ">
                 <a href="<%=request.getContextPath()%>/new-account" class="nav-link">Załóż konto</a>
             </li>
             <li class="nav-item ">
-                <a href="<%=request.getContextPath()%>/saved-customer-details" class="nav-link">Zaloguj</a>
+                <form id="login" method="post" action="<%=request.getContextPath()%>/login">
+                    <a href="javascript:{}" onclick="document.getElementById('login').submit(); return false;"
+                       class="nav-link">Zaloguj</a>
+                </form>
             </li>
+            </sec:authorize>
             <li class="nav-item ">
                 <a href="<%=request.getContextPath()%>/basket" class="nav-link">Koszyk</a>
             </li>

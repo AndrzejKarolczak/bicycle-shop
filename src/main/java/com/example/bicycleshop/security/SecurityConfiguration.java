@@ -42,7 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		
 		http.authorizeRequests()
 				.antMatchers("/").permitAll()
-				.antMatchers("/saved-customer-details/**").hasRole(Roles.CLIENT.name())
+				.antMatchers("/saved-customer-details/**", "/orders-list", "/orders/**").hasRole(Roles.CLIENT.name())
 //				.antMatchers("/start/**").hasAnyRole(Roles.EMPLOYEE.name(), Roles.MANAGER.name(), Roles.ADMINISTRATOR.name())
 //				.antMatchers("/managers/**").hasAnyRole(Roles.MANAGER.name(), Roles.ADMINISTRATOR.name())
 //				.antMatchers("/administrators/**").hasRole(Roles.ADMINISTRATOR.name())
@@ -52,7 +52,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 //					.loginProcessingUrl("/user-authentication")
 //					.permitAll()
 				.and()
-				.logout().permitAll()
+				.logout()
+				//.logoutUrl("/redirect-start").invalidateHttpSession(true)
+				.permitAll()
 				.and()
 				.exceptionHandling().accessDeniedPage("/access-denied");
 	}

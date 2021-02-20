@@ -1,27 +1,22 @@
 package com.example.bicycleshop.controllers;
 
 import com.example.bicycleshop.backend.entities.Order;
-import com.example.bicycleshop.backend.services.CustomerDetailsService;
-import com.example.bicycleshop.backend.services.OrderService;
-import com.example.bicycleshop.dtos.BasketItem;
-import com.example.bicycleshop.Session;
 import com.example.bicycleshop.backend.entities.enums.ProductType;
 import com.example.bicycleshop.backend.services.CountryService;
+import com.example.bicycleshop.backend.services.CustomerDetailsService;
+import com.example.bicycleshop.backend.services.OrderService;
 import com.example.bicycleshop.backend.services.ProductService;
 import com.example.bicycleshop.dtos.CustomerDetailsDto;
 import com.example.bicycleshop.dtos.PaymentDetailsDto;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.*;
+import java.util.UUID;
 
 @Controller
 public class RequestController {
-	private final HashMap<String, Session> sessions = new HashMap<>();
 	private final ProductService productService;
 	private final CountryService countryService;
 	private final CustomerDetailsService customerDetailsService;
@@ -29,7 +24,7 @@ public class RequestController {
 	
 	@Autowired
 	public RequestController(ProductService productService, CountryService countryService, CustomerDetailsService
-			customerDetailsService, OrderService orderService) {
+		customerDetailsService, OrderService orderService) {
 		this.productService = productService;
 		this.countryService = countryService;
 		this.customerDetailsService = customerDetailsService;
@@ -64,7 +59,7 @@ public class RequestController {
 	@GetMapping("/customer-details")
 	public String showCustomerDetailsPage(Model model) {
 		String sessionId = UUID.randomUUID().toString();
-		model.addAttribute("countries", countryService.getCountries());
+		model.addAttribute("countries", countryService.getHtmlListOfCountries());
 		model.addAttribute("customerDetails", new CustomerDetailsDto(sessionId));
 		return "customer-details-view";
 	}
@@ -121,4 +116,9 @@ public class RequestController {
 	public String showLoginPage() {
 		return "login-view";
 	}
+	
+//	@PostMapping("/logout")
+//	public String showLogoutPage() {
+//		return "start-view";
+//	}
 }

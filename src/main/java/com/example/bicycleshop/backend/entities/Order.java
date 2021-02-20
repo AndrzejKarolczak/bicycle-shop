@@ -1,6 +1,7 @@
 package com.example.bicycleshop.backend.entities;
 
 import com.example.bicycleshop.backend.entities.enums.OrderStatus;
+import com.example.bicycleshop.utilities.Formatter;
 import com.example.bicycleshop.validation.ValidationMessages;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -84,6 +85,10 @@ public class Order implements Serializable {
         return sumOfProductsInOrder;
     }
 
+    public String getOrderTimestampAsFormattedString(){
+        return Formatter.getDateTimeFormatter().format(orderTimestamp);
+    }
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

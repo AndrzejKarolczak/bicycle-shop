@@ -51,6 +51,7 @@ public abstract class BusinessEntity {
     @JoinColumn(name = "account_id", unique = true)
     private Account account;
 
+    @Setter(AccessLevel.NONE)
     @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH, CascadeType.REFRESH},
         mappedBy = "client", fetch = FetchType.LAZY)
     private List<Order> orders = new ArrayList<>();

@@ -5,6 +5,7 @@ import com.example.bicycleshop.backend.entities.Order;
 import com.example.bicycleshop.backend.entities.Product;
 import com.example.bicycleshop.backend.entities.ProductInOrder;
 import com.example.bicycleshop.backend.entities.enums.OrderStatus;
+import com.example.bicycleshop.backend.repositories.BusinessEntityRepository;
 import com.example.bicycleshop.backend.repositories.OrderRepository;
 import com.example.bicycleshop.backend.repositories.ProductInOrderRepository;
 import com.example.bicycleshop.backend.repositories.ProductRepository;
@@ -24,13 +25,15 @@ public class OrderServiceImpl implements OrderService {
 	private final OrderRepository orderRepository;
 	private final ProductInOrderRepository productInOrderRepository;
 	private final ProductRepository productRepository;
+	private final BusinessEntityRepository businessEntityRepository;
 	
 	public OrderServiceImpl(CustomerDetailsService customerDetailsService, OrderRepository orderRepository,
-							ProductInOrderRepository productInOrderRepository, ProductRepository productRepository) {
+							ProductInOrderRepository productInOrderRepository, ProductRepository productRepository, BusinessEntityRepository businessEntityRepository) {
 		this.customerDetailsService = customerDetailsService;
 		this.orderRepository = orderRepository;
 		this.productInOrderRepository = productInOrderRepository;
 		this.productRepository = productRepository;
+		this.businessEntityRepository = businessEntityRepository;
 	}
 	
 	@Override
@@ -40,10 +43,10 @@ public class OrderServiceImpl implements OrderService {
 		List<BasketItem> basket = prepareBasket(form);
 		
 		basket.forEach(item ->
-				productRepository.findById(item.getId()).map(product -> {
-					ProductInOrder partInOrder = new ProductInOrder(product, order, item.getQuantity(), item.getPrice());
-					return productInOrderRepository.save(partInOrder);
-				}).orElseThrow(() -> new NotFoundException(Product.class, item.getId()))
+			productRepository.findById(item.getId()).map(product -> {
+				ProductInOrder partInOrder = new ProductInOrder(product, order, item.getQuantity(), item.getPrice());
+				return productInOrderRepository.save(partInOrder);
+			}).orElseThrow(() -> new NotFoundException(Product.class, item.getId()))
 		);
 		
 		return order;
@@ -60,4 +63,18 @@ public class OrderServiceImpl implements OrderService {
 			throw new RuntimeException(e);
 		}
 	}
+	
+	@Override
+	public List<Order> getOrders(BusinessEntity businessEntity) {
+		return businessEntityRepository.getOrderByClientId(businessEntity.getBusinessEntityId())
+			.map(BusinessEntity::getOrders)
+			.orElseThrow(() -> new NotFoundException(BusinessEntity.class, businessEntity.getBusinessEntityId()));
+	}
+	
+	@Override
+	public Order getOrder(Long id){
+		return  orderRepository.getOrderDetails(id)
+			.orElseThrow(() -> new NotFoundException(Order.class, id));
+	}
+	
 }

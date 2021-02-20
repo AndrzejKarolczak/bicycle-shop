@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface CountryService {
 	List<CountryDto> getCountries();
+	
+	String getHtmlListOfCountries();
 }

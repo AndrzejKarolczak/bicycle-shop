@@ -54,7 +54,7 @@
                 <td>
                     <c:out value="${item.code}"/>
                 </td>
-                <td class="numberColumn">
+                <td class="rightAlignedColumn">
                         <c:out value="${item.price}"/>
                 <td class="buttonColumn">
                     <input class="btn btn-primary btn-sm" type="button"

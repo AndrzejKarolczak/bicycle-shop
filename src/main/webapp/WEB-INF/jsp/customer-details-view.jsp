@@ -85,16 +85,12 @@
                                             <jsp:param name="billing" value="true"/>
                                         </jsp:include>
                                     </div>
-                                    <div class="form-group">
-                                        <select name="billingCountry" class="form-control" required
-                                                id="billing-country-1">
-                                            <c:forEach var="country" items="${countries}">
-                                                <option value="${country.id}"
-                                                        <c:if test="${country.name == 'Polska'}">selected</c:if>>
-                                                        ${country.name}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
+
+                                    <jsp:include page="components/countries-view.jsp">
+                                        <jsp:param name="suffix" value="1"/>
+                                        <jsp:param name="options" value='${countries}'/>
+                                        <jsp:param name="billing" value="true"/>
+                                    </jsp:include>
                                 </div>
 
                                 <div class="col-md-4" id="shipping-address-group-1" style="display: none">
@@ -113,14 +109,11 @@
                                         <jsp:param name="suffix" value="1"/>
                                     </jsp:include>
 
-                                    <div class="form-group">
-                                        <select class="form-control" id="shipping-country-1" name="shippingCountry">
-                                            <c:forEach var="country" items="${countries}">
-                                                <option value="${country.id}"
-                                                        <c:if test="${country.name == 'Polska'}">selected</c:if>>${country.name}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
+                                    <jsp:include page="components/countries-view.jsp">
+                                        <jsp:param name="suffix" value="1"/>
+                                        <jsp:param name="options" value='${countries}'/>
+                                        <jsp:param name="billing" value="false"/>
+                                    </jsp:include>
                                 </div>
                             </div>
 
@@ -177,15 +170,11 @@
                                             <jsp:param name="billing" value="true"/>
                                         </jsp:include>
                                     </div>
-                                    <div class="form-group">
-                                        <select name="billingCountry" class="form-control" required
-                                                id="billing-country-2">
-                                            <c:forEach var="country" items="${countries}">
-                                                <option value="${country.id}"
-                                                        <c:if test="${country.name == 'Polska'}">selected</c:if>>${country.name}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
+                                    <jsp:include page="components/countries-view.jsp">
+                                        <jsp:param name="suffix" value="2"/>
+                                        <jsp:param name="options" value='${countries}'/>
+                                        <jsp:param name="billing" value="true"/>
+                                    </jsp:include>
                                 </div>
 
                                 <div class="col-md-4" id="shipping-address-group-2" style="display: none">
@@ -202,16 +191,11 @@
                                         <jsp:param name="suffix" value="2"/>
                                     </jsp:include>
 
-                                    <div class="form-group">
-                                        <select name="shippingCountry" class="form-control" id="shipping-country-2"
-                                                name="shipping-country">
-                                            <c:forEach var="country" items="${countries}">
-                                                <option value="${country.id}"
-                                                        <c:if test="${country.name == 'Polska'}">selected</c:if>>
-                                                        ${country.name}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
+                                    <jsp:include page="components/countries-view.jsp">
+                                        <jsp:param name="suffix" value="2"/>
+                                        <jsp:param name="options" value='${countries}'/>
+                                        <jsp:param name="billing" value="false"/>
+                                    </jsp:include>
                                 </div>
                             </div>
 

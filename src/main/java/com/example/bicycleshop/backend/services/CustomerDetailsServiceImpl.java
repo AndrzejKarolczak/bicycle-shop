@@ -53,38 +53,38 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 	
 	private BusinessEntity processRegistration(CustomerDetailsDto form, Account account) {
 		return countryRepository
-				.findById(form.getBillingCountry())
-				.map(country -> {
-					Optional<City> cityOrNot = cityRepository.getCityByName(country.getCountryId(),
-							form.getBillingCity().trim().toUpperCase());
-					
-					City city = getSavedCity(country, cityOrNot);
-					Address billingAddress = getSavedAddress(form.getBillingStreet(), form.getBillingBuildingNumber(),
-							form.getBillingSuiteNumber(), form.getBillingPostalCode(), city);
-					
-					Address shippingAddress;
-					if (hasShippingAddress(form)) {
-						shippingAddress = getShippingAddress(form);
-					} else {
-						shippingAddress = billingAddress;
-					}
-					
-					BusinessEntity businessEntity;
-					if (Boolean.valueOf(form.getIsIndividual()) == Boolean.TRUE) {
-						businessEntity = getSavedIndividual(form.getBillingFirstName(), form.getBillingLastName(),
-								billingAddress, shippingAddress, form.getEmail(), form.getPhone(), account);
-					} else {
-						businessEntity = getSavedOrganization(form.getBillingCompanyName(), billingAddress,
-								shippingAddress, form.getEmail(), form.getTaxIdNumber(), form.getPhone(), account);
-					}
-					
-					return businessEntity;
-				}).orElseThrow(() -> new NotFoundException(Country.class, form.getBillingCountry()));
+			.findById(form.getBillingCountry())
+			.map(country -> {
+				Optional<City> cityOrNot = cityRepository.getCityByName(country.getCountryId(),
+					form.getBillingCity().trim().toUpperCase());
+				
+				City city = getSavedCity(country, cityOrNot);
+				Address billingAddress = getSavedAddress(form.getBillingStreet(), form.getBillingBuildingNumber(),
+					form.getBillingSuiteNumber(), form.getBillingPostalCode(), city);
+				
+				Address shippingAddress;
+				if (hasShippingAddress(form)) {
+					shippingAddress = getShippingAddress(form);
+				} else {
+					shippingAddress = billingAddress;
+				}
+				
+				BusinessEntity businessEntity;
+				if (Boolean.valueOf(form.getIsIndividual()) == Boolean.TRUE) {
+					businessEntity = getSavedIndividual(form.getBillingFirstName(), form.getBillingLastName(),
+						billingAddress, shippingAddress, form.getEmail(), form.getPhone(), account);
+				} else {
+					businessEntity = getSavedOrganization(form.getBillingCompanyName(), billingAddress,
+						shippingAddress, form.getEmail(), form.getTaxIdNumber(), form.getPhone(), account);
+				}
+				
+				return businessEntity;
+			}).orElseThrow(() -> new NotFoundException(Country.class, form.getBillingCountry()));
 	}
 	
 	private boolean hasShippingAddress(CustomerDetailsDto form) {
 		return !form.getShippingStreet().isEmpty() & !form.getShippingBuildingNumber().isEmpty() &
-				!form.getShippingPostalCode().isEmpty() & !form.getShippingCity().isEmpty();
+			!form.getShippingPostalCode().isEmpty() & !form.getShippingCity().isEmpty();
 	}
 	
 	private City getSavedCity(Country country, Optional<City> optionalCity) {
@@ -99,16 +99,16 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 	
 	private Address getShippingAddress(CustomerDetailsDto form) {
 		return countryRepository
-				.findById(form.getShippingCountry())
-				.map(country -> {
-					Optional<City> cityOrNot = cityRepository.getCityByName(country.getCountryId(),
-							form.getShippingCity().trim().toUpperCase());
-					
-					City city = getSavedCity(country, cityOrNot);
-					return getSavedAddress(form.getShippingStreet(), form.getShippingBuildingNumber(),
-							form.getShippingSuiteNumber(), form.getShippingPostalCode(), city);
-				})
-				.orElseThrow(() -> new NotFoundException(Country.class, form.getBillingCountry()));
+			.findById(form.getShippingCountry())
+			.map(country -> {
+				Optional<City> cityOrNot = cityRepository.getCityByName(country.getCountryId(),
+					form.getShippingCity().trim().toUpperCase());
+				
+				City city = getSavedCity(country, cityOrNot);
+				return getSavedAddress(form.getShippingStreet(), form.getShippingBuildingNumber(),
+					form.getShippingSuiteNumber(), form.getShippingPostalCode(), city);
+			})
+			.orElseThrow(() -> new NotFoundException(Country.class, form.getBillingCountry()));
 	}
 	
 	private BusinessEntity getSavedIndividual(String firstName, String lastName, Address billingAddress,
@@ -135,16 +135,16 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 	
 	private Account getSavedAccount(String login, String rawPassword) {
 		return accountRepository.findByLogin(login)
-				.orElseGet(() -> authorityGroupRepository
-						.findById(Roles.CLIENT.getAuthorityGroupNumber())
-						.map(group -> {
-							Account account = new Account(login, passwordEncoder.encode(rawPassword), group);
-							account.setEnabled(true)
-									.setCredentialsNonExpired(true)
-									.setAccountNonExpired(true)
-									.setAccountNonLocked(true);
-							return accountRepository.save(account);
-						}).orElseThrow(() -> new AccountAlreadyExists(login)));
+			.orElseGet(() -> authorityGroupRepository
+				.findById(Roles.CLIENT.getAuthorityGroupNumber())
+				.map(group -> {
+					Account account = new Account(login, passwordEncoder.encode(rawPassword), group);
+					account.setEnabled(true)
+						.setCredentialsNonExpired(true)
+						.setAccountNonExpired(true)
+						.setAccountNonLocked(true);
+					return accountRepository.save(account);
+				}).orElseThrow(() -> new AccountAlreadyExists(login)));
 	}
 
 //	@Override
