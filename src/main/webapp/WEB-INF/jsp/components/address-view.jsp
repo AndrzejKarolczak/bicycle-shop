@@ -18,23 +18,23 @@
 <c:if test="${param.billing == 'true'}">
     <div class="form-group">
         <input type="text" name="billingStreet" required class="form-control" placeholder="Ulica"
-               value=""/>
+               value="${param.billingStreet}"/>
     </div>
     <div class="form-group">
         <input type="text" name="billingBuildingNumber" required class="form-control"
-               placeholder="Numer budynku" value=""/>
+               placeholder="Numer budynku" value="${param.billingBuildingNumber}"/>
     </div>
     <div class="form-group">
         <input type="text" name="billingSuiteNumber" class="form-control" placeholder="Numer lokalu"
-               value=""/>
+               value="${param.billingSuiteNumber}"/>
     </div>
     <div class="form-group">
         <input type="text" name="billingCity" required class="form-control" placeholder="Miasto"
-               value=""/>
+               value="${param.billingCity}"/>
     </div>
     <div class="form-group">
         <input type="text" name="billingPostalCode" required class="form-control"
-               placeholder="Kod pocztowy: 00-000" value="" pattern="[0-9]{2}-[0-9]{3}"/>
+               placeholder="Kod pocztowy: 00-000" value="${param.billingPostalCode}" pattern="[0-9]{2}-[0-9]{3}"/>
     </div>
 
 </c:if>
@@ -42,23 +42,23 @@
 <c:if test="${param.billing == 'false'}">
     <div class="form-group">
         <input type="text" id="shipping-street-${param.suffix}" name="shippingStreet" class="form-control"
-               placeholder="Ulica" value=""/>
+               placeholder="Ulica" value="${param.shippingStreet}"/>
     </div>
     <div class="form-group">
         <input type="text" id="shipping-building-number-${param.suffix}" name="shippingBuildingNumber"
-               class="form-control" placeholder="Numer budynku" value=""/>
+               class="form-control" placeholder="Numer budynku" value="${param.shippingBuildingNumber}"/>
     </div>
     <div class="form-group">
         <input type="text" id="shipping-suite-number-${param.suffix}" name="shippingSuiteNumber" class="form-control"
-               placeholder="Numer lokalu" value=""/>
+               placeholder="Numer lokalu" value="${param.shippingSuiteNumber}"/>
     </div>
     <div class="form-group">
         <input type="text" id="shipping-city-${param.suffix}" name="shippingCity" class="form-control"
-               placeholder="Miasto" value=""/>
+               placeholder="Miasto" value="${param.shippingCity}"/>
     </div>
     <div class="form-group">
         <input type="text" id="shipping-postal-code-${param.suffix}" name="shippingPostalCode" class="form-control"
-               placeholder="Kod pocztowy: 00-000" value="" pattern="[0-9]{2}-[0-9]{3}"/>
+               placeholder="Kod pocztowy: 00-000" value="${param.shippingPostalCode}" pattern="[0-9]{2}-[0-9]{3}"/>
     </div>
 </c:if>
 </body>

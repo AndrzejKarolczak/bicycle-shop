@@ -19,25 +19,30 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 public class Bicycle extends Product implements Serializable {
-    public static final String DISCRIMINATOR_VALUE = "BICYCLE";
-
-    @Enumerated(EnumType.STRING)
-    private BicycleType bicycleType;
-
-    public Bicycle(String name, BigDecimal price, BicycleType bicycleType, BusinessEntity manufacturer) {
-        super(name, price, manufacturer);
-        this.bicycleType = bicycleType;
-    }
-
-    @Override
-    public String toString() {
-        return "Bicycle{" +
-            "productId=" + getProductId() +
-            ", name='" + getName() + '\'' +
-            ", code='" + getCode() + '\'' +
-            ", price=" + getPrice() +
-            ", bicycleType=" + bicycleType +
-            ", manufacturer=" + getManufacturer() +
-            '}';
-    }
+	public static final String DISCRIMINATOR_VALUE = "BICYCLE";
+	
+	@Enumerated(EnumType.STRING)
+	private BicycleType bicycleType;
+	
+	public Bicycle(String name, BigDecimal price, BicycleType bicycleType, BusinessEntity manufacturer) {
+		super(name, price, manufacturer);
+		this.bicycleType = bicycleType;
+	}
+	
+	@Override
+	public String getCategoryName() {
+		return bicycleType.name();
+	}
+	
+	@Override
+	public String toString() {
+		return "Bicycle{" +
+			"productId=" + getProductId() +
+			", name='" + getName() + '\'' +
+			", code='" + getCode() + '\'' +
+			", price=" + getPrice() +
+			", bicycleType=" + bicycleType +
+			", manufacturer=" + getManufacturer() +
+			'}';
+	}
 }

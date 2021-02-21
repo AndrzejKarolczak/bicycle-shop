@@ -41,16 +41,18 @@ class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
-	public Order save(CustomerDetailsDto form) {
-		BusinessEntity client = customerDetailsService.save(form);
-		Order order = orderRepository.saveAndFlush(new Order(client, OrderStatus.PRELIMINARY));
+	public Order saveNew(CustomerDetailsDto form) {
+		BusinessEntity client = customerDetailsService.saveNew(form);
+		Order order = orderRepository.saveAndFlush(new Order(client, OrderStatus.NEW));
 		List<BasketItem> basket = prepareBasket(form);
 		
 		basket.forEach(item ->
-			productRepository.findById(item.getId()).map(product -> {
-				ProductInOrder partInOrder = new ProductInOrder(product, order, item.getQuantity(), item.getPrice());
-				return productInOrderRepository.save(partInOrder);
-			}).orElseThrow(() -> new NotFoundException(Product.class, item.getId()))
+			productRepository.findById(item.getId())
+				.map(product -> {
+					ProductInOrder partInOrder = new ProductInOrder(product, order, item.getQuantity(), item.getPrice());
+					return productInOrderRepository.save(partInOrder);
+				})
+				.orElseThrow(() -> new NotFoundException(Product.class, item.getId()))
 		);
 		
 		return order;
@@ -69,6 +71,16 @@ class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
+	public Order updateOrderStatus(Long id, OrderStatus status) {
+		return orderRepository.findById(id)
+			.map(order -> {
+				order.setOrderStatus(status);
+				return orderRepository.saveAndFlush(order);
+			})
+			.orElseThrow(() -> new NotFoundException(Order.class, id));
+	}
+	
+	@Override
 	public List<Order> getOrders(BusinessEntity businessEntity) {
 		return businessEntityRepository.getOrderByClientId(businessEntity.getBusinessEntityId())
 			.map(BusinessEntity::getOrders)
@@ -80,5 +92,4 @@ class OrderServiceImpl implements OrderService {
 		return orderRepository.getOrderDetails(id)
 			.orElseThrow(() -> new NotFoundException(Order.class, id));
 	}
-	
 }

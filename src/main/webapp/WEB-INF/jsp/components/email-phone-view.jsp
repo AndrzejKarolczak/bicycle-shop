@@ -16,12 +16,12 @@
 </head>
 <body>
 <div class="form-group">
-    <input type="email" name="email" required class="form-control" placeholder="Email" value=""/>
+    <input type="email" name="email" required class="form-control" placeholder="Email" value="${param.email}"/>
 </div>
 
 <div class="form-group">
     <input type="tel" name="phone" required class="form-control" placeholder="Numer telefonu: 123-456-789"
-           value="" pattern="^(?:\(?\?)?(?:[-\.\(\)\s]*(\d)){9}\)?$"/>
+           value="${param.phone}" pattern="^(?:\(?\?)?(?:[-\.\(\)\s]*(\d)){9}\)?$"/>
 </div>
 </body>
 </html>

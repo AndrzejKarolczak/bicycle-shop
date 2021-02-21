@@ -42,10 +42,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		
 		http.authorizeRequests()
 				.antMatchers("/").permitAll()
-				.antMatchers("/saved-customer-details/**", "/orders-list", "/orders/**").hasRole(Roles.CLIENT.name())
-//				.antMatchers("/start/**").hasAnyRole(Roles.EMPLOYEE.name(), Roles.MANAGER.name(), Roles.ADMINISTRATOR.name())
-//				.antMatchers("/managers/**").hasAnyRole(Roles.MANAGER.name(), Roles.ADMINISTRATOR.name())
-//				.antMatchers("/administrators/**").hasRole(Roles.ADMINISTRATOR.name())
+				.antMatchers("/saved-customer-details/**", "/orders-list", "/orders/**").hasAnyRole(Roles.CLIENT.name())
 				.and().csrf().disable()
 				.formLogin()
 //					.loginPage("/login")
@@ -57,10 +54,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.permitAll()
 				.and()
 				.exceptionHandling().accessDeniedPage("/access-denied");
-	}
-	
-	@Bean
-	public PasswordEncoder getPasswordEncoder() {
-		return new BCryptPasswordEncoder();
 	}
 }

@@ -10,4 +10,6 @@ public interface BusinessEntityService {
 	
 	BusinessEntity getSavedOrganization(String name, Address billingAddress, Address shippingAddress, String email,
 										String taxIdNumber, String phone, Account account);
+	
+	BusinessEntity getBusinessEntityDetailsById(Long id);
 }

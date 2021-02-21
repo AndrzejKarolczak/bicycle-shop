@@ -83,4 +83,8 @@ public abstract class BusinessEntity {
     }
     
     public abstract String getName();
+    
+    public boolean isIndividual(){
+        return this.getClass().equals(Individual.class);
+    }
 }

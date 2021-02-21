@@ -44,8 +44,6 @@
         <input class="btn btn-danger" id="clear-basket" type="button" value="Wyczyść koszyk"
                onclick="clearBasketContents()">
         <a class="btn btn-primary" href="<%=request.getContextPath()%>/">Wróć do zakupów</a>
-        <%--        <a class="btn btn-success" id="submit-order" href="<%=request.getContextPath()%>/customer-details">
-                    Realizuj zamówienie</a>--%>
         <button type="button" class="btn btn-success" id="submit-order" data-toggle="modal" data-target="#exampleModal">
             Realizuj zamówienie
         </button>

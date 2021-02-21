@@ -18,7 +18,7 @@
 
 <div class="form-group form-check" style="margin-top: 7px">
     <input type="checkbox" class="form-check-input" id="include-shipping-${param.suffix}" name="include-shipping-${param.suffix}"
-           onclick="showShippingAddress(${param.suffix})">
+           onclick="showShippingAddress(${param.suffix})" ${param.checked}>
     <label class="form-check-label" for="include-shipping-${param.suffix}">
         Inny adres do wysyłki</label>
 </div>

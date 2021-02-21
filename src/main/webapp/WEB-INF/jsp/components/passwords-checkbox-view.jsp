@@ -19,7 +19,7 @@
 <div class="form-group form-check" style="margin-top: 30px">
     <input type="checkbox" class="form-check-input" id="register-me-${param.suffix}" name="register-me"
            onclick="enablePasswords(${param.suffix})">
-    <label class="form-check-label" for="register-me-${param.suffix}">Chcę założyć konto</label>
+    <label class="form-check-label" for="register-me-${param.suffix}">${param.message}</label>
 </div>
 
 </body>

@@ -17,7 +17,7 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 
-<body onload="disableSubmitButtonsOnEmptyBasket()">
+<body > <%--onload="disableSubmitButtonsOnEmptyBasket()"--%>
 
 <jsp:include page="components/header-view.jsp"/>
 
@@ -30,17 +30,6 @@
     <div class="register">
         <div class="row">
             <div class="col-12 register-right">
-                <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link active" id="individual-tab" data-toggle="tab" href="#individual" role="tab"
-                           aria-controls="home" aria-selected="true">Osoba</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" id="firm-tab" data-toggle="tab" href="#firm" role="tab"
-                           aria-controls="profile" aria-selected="false">Firma</a>
-                    </li>
-                </ul>
-
                 <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="individual" role="tabpanel"
                          aria-labelledby="individual-tab">
@@ -60,13 +49,18 @@
                                         <jsp:param name="billing" value="true"/>
                                         <jsp:param name="required" value="required"/>
                                         <jsp:param name="suffix" value="1"/>
+                                        <jsp:param name="firstName" value="${customerDetails.billingFirstName}"/>
+                                        <jsp:param name="lastName" value="${customerDetails.billingLastName}"/>
                                     </jsp:include>
 
-                                    <jsp:include page="components/email-phone-view.jsp"/>
+                                    <jsp:include page="components/email-phone-view.jsp">
+                                        <jsp:param name="email" value="${customerDetails.email}"/>
+                                        <jsp:param name="phone" value="${customerDetails.phone}"/>
+                                    </jsp:include>
 
                                     <jsp:include page="components/passwords-checkbox-view.jsp">
+                                        <jsp:param name="message" value="Chcę zmienić hasło"/>
                                         <jsp:param name="suffix" value="1"/>
-                                        <jsp:param name="message" value="Chcę założyć konto"/>
                                     </jsp:include>
 
                                     <jsp:include page="components/passwords-view.jsp">
@@ -84,6 +78,11 @@
                                     <div style="margin-top: 23px">
                                         <jsp:include page="components/address-view.jsp">
                                             <jsp:param name="billing" value="true"/>
+                                            <jsp:param name="billingStreet" value="${customerDetails.billingStreet}"/>
+                                            <jsp:param name="billingBuildingNumber" value="${customerDetails.billingBuildingNumber}"/>
+                                            <jsp:param name="billingSuiteNumber" value="${customerDetails.billingSuiteNumber}"/>
+                                            <jsp:param name="billingCity" value="${customerDetails.billingCity}"/>
+                                            <jsp:param name="billingPostalCode" value="${customerDetails.billingPostalCode}"/>
                                         </jsp:include>
                                     </div>
 
@@ -98,6 +97,8 @@
                                     <jsp:include page="components/first-and-last-name-view.jsp">
                                         <jsp:param name="billing" value="false"/>
                                         <jsp:param name="suffix" value="1"/>
+                                        <jsp:param name="firstName" value="${customerDetails.shippingFirstName}"/>
+                                        <jsp:param name="lastName" value="${customerDetails.shippingLastName}"/>
                                     </jsp:include>
 
                                     <jsp:include page="components/company-name-view.jsp">
@@ -108,93 +109,15 @@
                                     <jsp:include page="components/address-view.jsp">
                                         <jsp:param name="billing" value="false"/>
                                         <jsp:param name="suffix" value="1"/>
+                                        <jsp:param name="shippingStreet" value="${customerDetails.shippingStreet}"/>
+                                        <jsp:param name="shippingBuildingNumber" value="${customerDetails.shippingBuildingNumber}"/>
+                                        <jsp:param name="shippingSuiteNumber" value="${customerDetails.shippingSuiteNumber}"/>
+                                        <jsp:param name="shippingCity" value="${customerDetails.shippingCity}"/>
+                                        <jsp:param name="shippingPostalCode" value="${customerDetails.shippingPostalCode}"/>
                                     </jsp:include>
 
                                     <jsp:include page="components/countries-view.jsp">
                                         <jsp:param name="suffix" value="1"/>
-                                        <jsp:param name="options" value='${countries}'/>
-                                        <jsp:param name="billing" value="false"/>
-                                    </jsp:include>
-                                </div>
-                            </div>
-
-                            <jsp:include page="components/cancell-and-submit-buttons-view.jsp">
-                                <jsp:param name="url"
-                                           value='${request.getContextPath()}/order-cancelled?session=${customerDetails.sessionId}'/>
-                                <jsp:param name="submit" value='Wybierz rodzaj płatności'/>
-                                <jsp:param name="onclick" value="onclick='clearBasketContents()'"/>
-                            </jsp:include>
-                        </form:form>
-                    </div>
-
-                    <div class="tab-pane fade show" id="firm" role="tabpanel" aria-labelledby="firm-tab">
-                        <form:form id="firm" modelAttribute="customerDetails" action="payment-details" method="post"
-                                   onsubmit="saveBasketContents()">
-                            <input type="hidden" name="sessionId" value="${customerDetails.sessionId}"/>
-                            <input type="hidden" name="basketContents"/>
-                            <input type="hidden" name="isIndividual" value="false"/>
-
-                            <h3 class="register-heading">Firma</h3>
-                            <div class="row register-form">
-                                <div class="col-md-4">
-                                    <jsp:include page="components/company-name-view.jsp">
-                                        <jsp:param name="billing" value="true"/>
-                                    </jsp:include>
-                                    <jsp:include page="components/tax-id-number-view.jsp"/>
-
-                                    <jsp:include page="components/first-and-last-name-view.jsp">
-                                        <jsp:param name="billing" value="true"/>
-                                        <jsp:param name="required" value=""/>
-                                        <jsp:param name="suffix" value="2"/>
-                                    </jsp:include>
-
-                                    <jsp:include page="components/email-phone-view.jsp"/>
-
-                                    <jsp:include page="components/passwords-checkbox-view.jsp">
-                                        <jsp:param name="suffix" value="2"/>
-                                        <jsp:param name="message" value="Chcę założyć konto"/>
-                                    </jsp:include>
-
-                                    <jsp:include page="components/passwords-view.jsp">
-                                        <jsp:param name="suffix" value="2"/>
-                                        <jsp:param name="required" value=""/>
-                                        <jsp:param name="disabled" value="disabled"/>
-                                    </jsp:include>
-                                </div>
-
-                                <div class="col-md-4">
-                                    <jsp:include page="components/shipping-addres-checkbox-view.jsp">
-                                        <jsp:param name="suffix" value="2"/>
-                                    </jsp:include>
-
-                                    <div style="margin-top: 23px">
-                                        <jsp:include page="components/address-view.jsp">
-                                            <jsp:param name="billing" value="true"/>
-                                        </jsp:include>
-                                    </div>
-                                    <jsp:include page="components/countries-view.jsp">
-                                        <jsp:param name="suffix" value="2"/>
-                                        <jsp:param name="options" value='${countries}'/>
-                                        <jsp:param name="billing" value="true"/>
-                                    </jsp:include>
-                                </div>
-
-                                <div class="col-md-4" id="shipping-address-group-2" style="display: none">
-                                    <jsp:include page="components/first-and-last-name-view.jsp">
-                                        <jsp:param name="billing" value="false"/>
-                                        <jsp:param name="suffix" value="2"/>
-                                    </jsp:include>
-                                    <jsp:include page="components/company-name-view.jsp">
-                                        <jsp:param name="billing" value="false"/>
-                                        <jsp:param name="suffix" value="2"/>
-                                    </jsp:include>
-                                    <jsp:include page="components/address-view.jsp">
-                                        <jsp:param name="billing" value="false"/>
-                                        <jsp:param name="suffix" value="2"/>
-                                    </jsp:include>
-
-                                    <jsp:include page="components/countries-view.jsp">
-                                        <jsp:param name="suffix" value="2"/>
                                         <jsp:param name="options" value='${countries}'/>
                                         <jsp:param name="billing" value="false"/>
                                     </jsp:include>

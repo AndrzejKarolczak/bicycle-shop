@@ -91,7 +91,7 @@ function clearBasketContents() {
     showBasketContents();
 }
 
-function sendBasketContents() {
+function saveBasketContents() {
     let array = [];
 
     for (let i = 0; i < localStorage.length; i++) {

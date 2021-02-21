@@ -12,4 +12,8 @@ import java.util.Optional;
 public interface BusinessEntityRepository extends JpaRepository<BusinessEntity, Long> {
 	@Query("SELECT b FROM BusinessEntity b LEFT JOIN FETCH b.orders o WHERE b.businessEntityId = :businessEntityId")
 	Optional<BusinessEntity> getOrderByClientId(@Param("businessEntityId") Long businessEntityId);
+	
+	@Query("SELECT b FROM BusinessEntity b JOIN FETCH b.billingAddress ba JOIN FETCH b.shippingAddress sa " +
+		"WHERE b.businessEntityId = :id")
+	Optional<BusinessEntity> getBusinessEntityDetailsById(@Param("id") Long id);
 }

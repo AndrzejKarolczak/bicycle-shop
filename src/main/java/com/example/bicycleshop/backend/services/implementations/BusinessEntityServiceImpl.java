@@ -4,9 +4,11 @@ import com.example.bicycleshop.backend.entities.Address;
 import com.example.bicycleshop.backend.entities.BusinessEntity;
 import com.example.bicycleshop.backend.entities.Individual;
 import com.example.bicycleshop.backend.entities.Organization;
+import com.example.bicycleshop.backend.repositories.BusinessEntityRepository;
 import com.example.bicycleshop.backend.repositories.IndividualRepository;
 import com.example.bicycleshop.backend.repositories.OrganizationRepository;
 import com.example.bicycleshop.backend.services.BusinessEntityService;
+import com.example.bicycleshop.exceptions.NotFoundException;
 import com.example.bicycleshop.security.entities.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,13 +19,11 @@ import java.util.Objects;
 @Service
 @Transactional
 class BusinessEntityServiceImpl implements BusinessEntityService {
-	private final IndividualRepository individualRepository;
-	private final OrganizationRepository organizationRepository;
+	private final BusinessEntityRepository businessEntityRepository;
 	
 	@Autowired
-	BusinessEntityServiceImpl(IndividualRepository individualRepository, OrganizationRepository organizationRepository) {
-		this.individualRepository = individualRepository;
-		this.organizationRepository = organizationRepository;
+	BusinessEntityServiceImpl(BusinessEntityRepository businessEntityRepository) {
+		this.businessEntityRepository = businessEntityRepository;
 	}
 	
 	@Override
@@ -35,7 +35,7 @@ class BusinessEntityServiceImpl implements BusinessEntityService {
 		else
 			client = new Individual(firstName, lastName, billingAddress, shippingAddress, email, phone, account);
 		
-		return individualRepository.saveAndFlush(client);
+		return businessEntityRepository.saveAndFlush(client);
 	}
 	
 	@Override
@@ -47,6 +47,12 @@ class BusinessEntityServiceImpl implements BusinessEntityService {
 		else
 			organization = new Organization(name, billingAddress, shippingAddress, email, taxIdNumber, phone, account);
 		
-		return organizationRepository.saveAndFlush(organization);
+		return businessEntityRepository.saveAndFlush(organization);
+	}
+	
+	@Override
+	public BusinessEntity getBusinessEntityDetailsById(Long id) {
+		return businessEntityRepository.getBusinessEntityDetailsById(id)
+			.orElseThrow(() -> new NotFoundException(BusinessEntity.class, id));
 	}
 }

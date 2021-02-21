@@ -12,6 +12,9 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     
     @Query("SELECT a FROM Account a LEFT JOIN FETCH a.businessEntity WHERE a.login = :login")
     Optional<Account> getAccountWithBusinessEntity(@Param("login") String login);
+    
+    @Query("SELECT a FROM Account a WHERE a.login = :login")
+    Optional<Account> getAccountByLogin(@Param("login") String login);
 
     @Query(nativeQuery = true,
         value = "SELECT a.authority_id AS id, a.authority_name AS name FROM accounts u " +

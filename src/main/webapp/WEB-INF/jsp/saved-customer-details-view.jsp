@@ -47,7 +47,7 @@
                         <%--@elvariable id="customerDetails" type=""--%>
                         <form:form id="individual" modelAttribute="customerDetails" action="payment-details"
                                    method="post"
-                                   onsubmit="sendBasketContents()">
+                                   onsubmit="saveBasketContents()">
 
                             <input type="hidden" name="sessionId" value="${customerDetails.sessionId}"/>
                             <input type="hidden" name="basketContents"/>
@@ -130,7 +130,7 @@
 
                     <div class="tab-pane fade show" id="firm" role="tabpanel" aria-labelledby="firm-tab">
                         <form:form id="firm" modelAttribute="customerDetails" action="payment-details" method="post"
-                                   onsubmit="sendBasketContents()">
+                                   onsubmit="saveBasketContents()">
                             <input type="hidden" name="sessionId" value="${customerDetails.sessionId}"/>
                             <input type="hidden" name="basketContents"/>
 

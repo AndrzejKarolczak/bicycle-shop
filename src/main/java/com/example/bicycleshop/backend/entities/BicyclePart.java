@@ -28,7 +28,12 @@ public class BicyclePart extends Product implements Serializable {
         super(name, price, manufacturer);
         this.bicyclePartType = bicyclePartType;
     }
-
+    
+    @Override
+    public String getCategoryName() {
+        return bicyclePartType.name();
+    }
+    
     @Override
     public String toString() {
         return "BicyclePart{" +

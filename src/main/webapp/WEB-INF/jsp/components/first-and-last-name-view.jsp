@@ -18,22 +18,22 @@
 <c:if test="${param.billing == 'true'}">
     <div class="form-group">
         <input type="text" id="billing-first-name-${param.suffix}" ${param.required} name="billingFirstName"
-               class="form-control" placeholder="Imię" value=""/>
+               class="form-control" placeholder="Imię" value="${param.firstName}"/>
     </div>
     <div class="form-group">
         <input type="text" id="billing-last-name-${param.suffix}" ${param.required} name="billingLastName"
-               class="form-control" placeholder="Nazwisko" value=""/>
+               class="form-control" placeholder="Nazwisko" value="${param.lastName}"/>
     </div>
 </c:if>
 
 <c:if test="${param.billing == 'false'}">
     <div class="form-group">
         <input type="text" id="shipping-first-name-${param.suffix}" name="shippingFirstName" class="form-control"
-               placeholder="Imię" value=""/>
+               placeholder="Imię" value="${param.firstName}"/>
     </div>
     <div class="form-group">
         <input type="text" id="shipping-last-name-${param.suffix}" name="shippingLastName" class="form-control"
-               placeholder="Nazwisko" value=""/>
+               placeholder="Nazwisko" value="${param.lastName}"/>
     </div>
 </c:if>
 

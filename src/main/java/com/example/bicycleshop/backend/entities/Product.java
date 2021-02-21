@@ -79,6 +79,8 @@ public abstract class Product implements Serializable {
         System.out.println(ordersForProduct);
     }
 
+    abstract public String getCategoryName();
+    
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -3,7 +3,6 @@ package com.example.bicycleshop.controllers;
 import com.example.bicycleshop.backend.entities.Bicycle;
 import com.example.bicycleshop.backend.entities.BicyclePart;
 import com.example.bicycleshop.backend.entities.Order;
-import com.example.bicycleshop.backend.entities.Product;
 import com.example.bicycleshop.backend.entities.enums.ProductType;
 import com.example.bicycleshop.backend.services.CountryService;
 import com.example.bicycleshop.backend.services.CustomerDetailsService;
@@ -83,15 +82,16 @@ public class RequestController {
 	
 	@PostMapping("/payment-details")
 	public String showPaymentDetailsPage(@ModelAttribute("customerDetails") CustomerDetailsDto form, Model model) {
-		Order order = orderService.save(form);
+		Order order = orderService.saveNew(form);
 		
-		model.addAttribute("session", form.getSessionId());
+		model.addAttribute("order", order);
 		//model.addAttribute("paymentDetails", new PaymentDetailsDto()); //TODO
 		return "payment-details-view";
 	}
 	
 	@PostMapping("payment-successful")
 	public String showPaymentSuccessfulPage(@ModelAttribute("paymentDetails") PaymentDetailsDto form, Model model) {
+		
 		model.addAttribute("title", "Transakcja zrealizowana");
 		model.addAttribute("message", "Transakcja została zrealizowana");
 		return "message-view";
@@ -104,17 +104,6 @@ public class RequestController {
 		return "message-view";
 	}
 	
-	@RequestMapping("/saved-customer-details")
-	public String showSavedCustomerDetailsPage(Model model) {
-		model.addAttribute("countries", countryService.getCountries());
-		return "saved-customer-details-view";
-	}
-	
-	@GetMapping("/access-denied")
-	public String showAccessDeniedPage() {
-		return "access-denied-view";
-	}
-	
 	@GetMapping("/new-account")
 	public String showNewAccountPage(Model model) {
 		model.addAttribute("countries", countryService.getCountries());
@@ -123,19 +112,9 @@ public class RequestController {
 	
 	@PostMapping("save-customer-details")
 	public String showCustomerDetailsSavedPage(@ModelAttribute("customerDetails") CustomerDetailsDto form, Model model) {
-		customerDetailsService.save(form);
+		customerDetailsService.saveNew(form);
 		model.addAttribute("title", "Dane zapisano");
 		model.addAttribute("message", "Dane klienta zostały zapisane");
 		return "message-view";
 	}
-	
-	@GetMapping("/login")
-	public String showLoginPage() {
-		return "login-view";
-	}
-	
-//	@PostMapping("/logout")
-//	public String showLogoutPage() {
-//		return "start-view";
-//	}
 }
