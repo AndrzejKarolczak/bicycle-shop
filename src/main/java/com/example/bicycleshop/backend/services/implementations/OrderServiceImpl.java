@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -45,10 +46,10 @@ class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
-	public Order saveNew(CustomerDetailsDto form, String login) {
+	public Order saveNew(CustomerDetailsDto form, Principal principal) {
 		BusinessEntity client;
-		if(Objects.nonNull(login) && !login.isEmpty())
-			client = authorizationService.getBusinessEntityForLogin(login);
+		if(Objects.nonNull(principal))
+			client = authorizationService.getBusinessEntityForLogin(principal.getName());
 		else {
 			client = customerDetailsService.saveNew(form);
 		}

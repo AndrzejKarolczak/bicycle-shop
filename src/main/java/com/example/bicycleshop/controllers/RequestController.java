@@ -84,7 +84,7 @@ public class RequestController {
 	
 	@PostMapping("/payment-details")
 	public String showPaymentDetailsPage(@ModelAttribute("customerDetails") CustomerDetailsDto form, Model model, Principal principal) {
-		Order order = orderService.saveNew(form, principal.getName());
+		Order order = orderService.saveNew(form, principal);
 		//tutaj powinien zostać wywołany serwis magazynowy InventoryService
 		model.addAttribute("order", order);
 		return "payment-details-view";
