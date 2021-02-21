@@ -16,6 +16,7 @@
 </head>
 <body>
 
+
 <div class="buttons">
     <a class="btn btn-danger btn-lg" href="${param.url}" ${param.onclick}>Anuluj</a>
     <input type="submit" class="btn btn-primary btn-lg" value="${param.submit}" name="submit"/>

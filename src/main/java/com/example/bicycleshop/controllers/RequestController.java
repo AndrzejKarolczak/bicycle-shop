@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.UUID;
 
 @Controller
@@ -82,8 +83,8 @@ public class RequestController {
 	}
 	
 	@PostMapping("/payment-details")
-	public String showPaymentDetailsPage(@ModelAttribute("customerDetails") CustomerDetailsDto form, Model model) {
-		Order order = orderService.saveNew(form);
+	public String showPaymentDetailsPage(@ModelAttribute("customerDetails") CustomerDetailsDto form, Model model, Principal principal) {
+		Order order = orderService.saveNew(form, principal.getName());
 		//tutaj powinien zostać wywołany serwis magazynowy InventoryService
 		model.addAttribute("order", order);
 		return "payment-details-view";

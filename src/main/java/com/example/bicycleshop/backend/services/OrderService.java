@@ -8,7 +8,8 @@ import com.example.bicycleshop.dtos.CustomerDetailsDto;
 import java.util.List;
 
 public interface OrderService {
-	Order saveNew(CustomerDetailsDto form);
+	
+	Order saveNew(CustomerDetailsDto form, String login);
 	
 	Order updateOrderStatus(Long id, OrderStatus status);
 	

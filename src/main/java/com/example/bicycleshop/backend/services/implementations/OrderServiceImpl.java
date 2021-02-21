@@ -14,6 +14,7 @@ import com.example.bicycleshop.backend.services.OrderService;
 import com.example.bicycleshop.dtos.BasketItem;
 import com.example.bicycleshop.dtos.CustomerDetailsDto;
 import com.example.bicycleshop.exceptions.NotFoundException;
+import com.example.bicycleshop.security.AuthorizationService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -30,19 +32,27 @@ class OrderServiceImpl implements OrderService {
 	private final ProductInOrderRepository productInOrderRepository;
 	private final ProductRepository productRepository;
 	private final BusinessEntityRepository businessEntityRepository;
+	private final AuthorizationService authorizationService;
 	
 	public OrderServiceImpl(CustomerDetailsService customerDetailsService, OrderRepository orderRepository,
-							ProductInOrderRepository productInOrderRepository, ProductRepository productRepository, BusinessEntityRepository businessEntityRepository) {
+							ProductInOrderRepository productInOrderRepository, ProductRepository productRepository, BusinessEntityRepository businessEntityRepository, AuthorizationService authorizationService) {
 		this.customerDetailsService = customerDetailsService;
 		this.orderRepository = orderRepository;
 		this.productInOrderRepository = productInOrderRepository;
 		this.productRepository = productRepository;
 		this.businessEntityRepository = businessEntityRepository;
+		this.authorizationService = authorizationService;
 	}
 	
 	@Override
-	public Order saveNew(CustomerDetailsDto form) {
-		BusinessEntity client = customerDetailsService.saveNew(form);
+	public Order saveNew(CustomerDetailsDto form, String login) {
+		BusinessEntity client;
+		if(Objects.nonNull(login) && !login.isEmpty())
+			client = authorizationService.getBusinessEntityForLogin(login);
+		else {
+			client = customerDetailsService.saveNew(form);
+		}
+		
 		Order order = new Order(client, OrderStatus.NEW);
 		List<BasketItem> basket = prepareBasket(form);
 		
@@ -51,7 +61,8 @@ class OrderServiceImpl implements OrderService {
 				.map(product -> {
 					ProductInOrder partInOrder = new ProductInOrder(product, order, item.getQuantity(), item.getPrice());
 					order.addProductToOrder(partInOrder);
-					return productInOrderRepository.save(partInOrder);
+					return partInOrder;
+					//return productInOrderRepository.save(partInOrder);
 				})
 				.orElseThrow(() -> new NotFoundException(Product.class, item.getId()))
 		);
