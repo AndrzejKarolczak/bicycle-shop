@@ -125,7 +125,7 @@ public class BicycleShopApplication extends SpringBootServletInitializer impleme
 		Order buyPartOrder = new Order(client, OrderStatus.NEW);
 		em.persist(buyPartOrder);
 		
-		ProductInOrder chainInOrder = new ProductInOrder(chain, buyPartOrder, 2, chainPrice);
+		ProductInOrder chainInOrder = new ProductInOrder(chain, buyPartOrder, 2, new BigDecimal("201.98"));
 		chain.addProductToOrder(chainInOrder);
 		buyPartOrder.addProductToOrder(chainInOrder);
 		em.persist(chainInOrder);

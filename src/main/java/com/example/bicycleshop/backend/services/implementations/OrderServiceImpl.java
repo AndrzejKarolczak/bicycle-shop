@@ -63,7 +63,6 @@ class OrderServiceImpl implements OrderService {
 					ProductInOrder partInOrder = new ProductInOrder(product, order, item.getQuantity(), item.getPrice());
 					order.addProductToOrder(partInOrder);
 					return partInOrder;
-					//return productInOrderRepository.save(partInOrder);
 				})
 				.orElseThrow(() -> new NotFoundException(Product.class, item.getId()))
 		);
