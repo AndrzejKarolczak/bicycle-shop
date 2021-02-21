@@ -1,14 +1,17 @@
-package com.example.bicycleshop.backend.services;
+package com.example.bicycleshop.backend.services.implementations;
 
+import com.example.bicycleshop.backend.services.CountryService;
 import com.example.bicycleshop.dtos.CountryDto;
 import com.example.bicycleshop.backend.repositories.CountryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 class CountryServiceImpl implements CountryService {
 	
 	private final CountryRepository countryRepository;

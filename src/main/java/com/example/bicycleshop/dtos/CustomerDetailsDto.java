@@ -37,4 +37,9 @@ public class CustomerDetailsDto {
 	public CustomerDetailsDto(String sessionId) {
 		this.sessionId = sessionId;
 	}
+	
+	public boolean hasShippingAddress() {
+		return !getShippingStreet().isEmpty() & !getShippingBuildingNumber().isEmpty() &
+			!getShippingPostalCode().isEmpty() & !getShippingCity().isEmpty();
+	}
 }

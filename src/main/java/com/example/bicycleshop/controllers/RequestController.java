@@ -104,7 +104,7 @@ public class RequestController {
 		return "message-view";
 	}
 	
-	@GetMapping("/saved-customer-details")
+	@RequestMapping("/saved-customer-details")
 	public String showSavedCustomerDetailsPage(Model model) {
 		model.addAttribute("countries", countryService.getCountries());
 		return "saved-customer-details-view";

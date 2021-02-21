@@ -1,4 +1,4 @@
-package com.example.bicycleshop.backend.services;
+package com.example.bicycleshop.backend.services.implementations;
 
 import com.example.bicycleshop.backend.entities.BusinessEntity;
 import com.example.bicycleshop.backend.entities.Order;
@@ -9,18 +9,22 @@ import com.example.bicycleshop.backend.repositories.BusinessEntityRepository;
 import com.example.bicycleshop.backend.repositories.OrderRepository;
 import com.example.bicycleshop.backend.repositories.ProductInOrderRepository;
 import com.example.bicycleshop.backend.repositories.ProductRepository;
+import com.example.bicycleshop.backend.services.CustomerDetailsService;
+import com.example.bicycleshop.backend.services.OrderService;
 import com.example.bicycleshop.dtos.BasketItem;
 import com.example.bicycleshop.dtos.CustomerDetailsDto;
 import com.example.bicycleshop.exceptions.NotFoundException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class OrderServiceImpl implements OrderService {
+@Transactional
+class OrderServiceImpl implements OrderService {
 	private final CustomerDetailsService customerDetailsService;
 	private final OrderRepository orderRepository;
 	private final ProductInOrderRepository productInOrderRepository;
@@ -72,8 +76,8 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
-	public Order getOrder(Long id){
-		return  orderRepository.getOrderDetails(id)
+	public Order getOrder(Long id) {
+		return orderRepository.getOrderDetails(id)
 			.orElseThrow(() -> new NotFoundException(Order.class, id));
 	}
 	

@@ -49,7 +49,6 @@
         <button type="button" class="btn btn-success" id="submit-order" data-toggle="modal" data-target="#exampleModal">
             Realizuj zamówienie
         </button>
-
     </div>
 
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -62,7 +61,7 @@
                     </button>
                 </div>
                 <div class="modal-footer">
-                    <form id="login" method="post" action="<%=request.getContextPath()%>/login"> <%--TODO--%>
+                    <form id="login" method="post" action="<%=request.getContextPath()%>/saved-customer-details">
                         <button type="submit" class="btn btn-secondary">Zaloguj</button>
                     </form>
                     <a href="<%=request.getContextPath()%>/customer-details"
