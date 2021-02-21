@@ -8,4 +8,6 @@ public interface CountryService {
 	List<CountryDto> getCountries();
 	
 	String getHtmlListOfCountries();
+	
+	String getHtmlListOfCountries(Long billingCountry);
 }

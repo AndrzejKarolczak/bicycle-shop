@@ -73,7 +73,8 @@ public class AuthorizationService implements UserDetailsService {
 						.setAccountNonExpired(true)
 						.setAccountNonLocked(true);
 					return accountRepository.save(account);
-				}).orElseThrow(() -> new AccountAlreadyExists(login)));
+				})
+				.orElseThrow(() -> new AccountAlreadyExists(login)));
 	}
 	
 	

@@ -18,7 +18,7 @@ public class Country {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "country_id", updatable = false)
-    private long countryId;
+    private Long countryId;
 
     @NotBlank(message = ValidationMessages.NOT_BLANK)
     @Column(nullable = false)

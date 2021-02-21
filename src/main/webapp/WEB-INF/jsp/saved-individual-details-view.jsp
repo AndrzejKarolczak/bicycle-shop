@@ -88,7 +88,7 @@
 
                                     <jsp:include page="components/countries-view.jsp">
                                         <jsp:param name="suffix" value="1"/>
-                                        <jsp:param name="options" value='${countries}'/>
+                                        <jsp:param name="options" value='${billingCountries}'/>
                                         <jsp:param name="billing" value="true"/>
                                     </jsp:include>
                                 </div>
@@ -118,15 +118,15 @@
 
                                     <jsp:include page="components/countries-view.jsp">
                                         <jsp:param name="suffix" value="1"/>
-                                        <jsp:param name="options" value='${countries}'/>
+                                        <jsp:param name="options" value='${shippingCountries}'/>
                                         <jsp:param name="billing" value="false"/>
                                     </jsp:include>
                                 </div>
                             </div>
 
-                            <jsp:include page="components/cancell-and-submit-buttons-view.jsp">
+                            <jsp:include page="components/cancel-and-submit-buttons-view.jsp">
                                 <jsp:param name="url"
-                                           value='${request.getContextPath()}/order-cancelled?session=${customerDetails.sessionId}'/>
+                                           value='${request.getContextPath()}/order-cancelled?orderId=0'/>
                                 <jsp:param name="submit" value='Wybierz rodzaj płatności'/>
                                 <jsp:param name="onclick" value="onclick='clearBasketContents()'"/>
                             </jsp:include>

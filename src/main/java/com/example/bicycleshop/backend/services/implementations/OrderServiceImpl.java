@@ -43,19 +43,20 @@ class OrderServiceImpl implements OrderService {
 	@Override
 	public Order saveNew(CustomerDetailsDto form) {
 		BusinessEntity client = customerDetailsService.saveNew(form);
-		Order order = orderRepository.saveAndFlush(new Order(client, OrderStatus.NEW));
+		Order order = new Order(client, OrderStatus.NEW);
 		List<BasketItem> basket = prepareBasket(form);
 		
 		basket.forEach(item ->
 			productRepository.findById(item.getId())
 				.map(product -> {
 					ProductInOrder partInOrder = new ProductInOrder(product, order, item.getQuantity(), item.getPrice());
+					order.addProductToOrder(partInOrder);
 					return productInOrderRepository.save(partInOrder);
 				})
 				.orElseThrow(() -> new NotFoundException(Product.class, item.getId()))
 		);
-		
-		return order;
+
+		return orderRepository.saveAndFlush(order);
 	}
 	
 	private static List<BasketItem> prepareBasket(CustomerDetailsDto form) {

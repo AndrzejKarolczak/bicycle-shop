@@ -130,17 +130,18 @@ PayPo - kup teraz, zapłać za 30 dni </span>
             </div>
         </div>
     </div>
-
     <div>
-        <form:form method="post" id="proceed-payment" cssStyle="float: right" action="payment-successful"
+        <label class="label-bold" for="order-value">Wartość zamówienia</label>
+        <input class="basket-value-input" id="order-value" type="text" readonly value="${order.calculateOrderValue()}">
+    </div>
+    <div>
+        <form:form method="post" id="proceed-payment" cssStyle="float: right"
+                   action="payment-successful?orderId=${order.getOrderId()}"
                    modelAttribute="paymentDetails" onsubmit="clearBasketContents()">
-            <%--            <input type="hidden" name="sessionId" value="${paymentDetails.sessionId}"/>--%>
 
         </form:form>
-        <form:form method="post" id="cancel-order" action="order-cancelled?session=${session}"
-                   modelAttribute="paymentDetails" onsubmit="clearBasketContents()">
-            <%--            <input type="hidden" name="sessionId" value="${paymentDetails.sessionId}"/>--%>
-
+        <form:form method="post" id="cancel-order" action="order-cancelled?orderId=${order.getOrderId()}"
+                   onsubmit="clearBasketContents()">
         </form:form>
     </div>
     <div>

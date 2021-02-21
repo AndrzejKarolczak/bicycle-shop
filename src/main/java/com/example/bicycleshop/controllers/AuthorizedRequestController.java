@@ -51,7 +51,8 @@ public class AuthorizedRequestController {
 	public String showSavedCustomerDetailsPage(Model model, Principal principal) {
 		CustomerDetailsDto client = customerDetailsService.getCustomerDetailsForLogin(principal.getName());
 		model.addAttribute("customerDetails", client);
-		model.addAttribute("countries", countryService.getHtmlListOfCountries());
+		model.addAttribute("billingCountries", countryService.getHtmlListOfCountries(client.getBillingCountry()));
+		model.addAttribute("shippingCountries", countryService.getHtmlListOfCountries(client.getShippingCountry()));
 		if (Boolean.parseBoolean(client.getIsIndividual())) {
 			return "saved-individual-details-view";
 		} else {

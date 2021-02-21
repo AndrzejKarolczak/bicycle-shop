@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 class CountryServiceImpl implements CountryService {
 	
 	private final CountryRepository countryRepository;
-	public static final String DEFAULT_COUNTRY = "Polska";
+	public static final Long DEFAULT_COUNTRY_ID = 136L;
 	
 	@Autowired
 	public CountryServiceImpl(CountryRepository countryRepository) {
@@ -29,13 +29,18 @@ class CountryServiceImpl implements CountryService {
 	
 	@Override
 	public String getHtmlListOfCountries() {
+		return getHtmlListOfCountries(DEFAULT_COUNTRY_ID);
+	}
+	
+	@Override
+	public String getHtmlListOfCountries(Long countryId) {
 		String htmlOption = "<option value=\"%1$s\" %2$s>%3$s</option>\n";
 		StringBuilder builder = new StringBuilder();
 		
 		countryRepository.findAll().forEach(country ->
 			builder.append(String.format(htmlOption,
 				country.getCountryId(),
-				country.getName().equals(DEFAULT_COUNTRY) ? "selected" : "",
+				country.getCountryId().equals(countryId) ? "selected" : "",
 				country.getName()
 			))
 		);

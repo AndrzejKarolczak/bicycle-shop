@@ -3,6 +3,7 @@ package com.example.bicycleshop.controllers;
 import com.example.bicycleshop.backend.entities.Bicycle;
 import com.example.bicycleshop.backend.entities.BicyclePart;
 import com.example.bicycleshop.backend.entities.Order;
+import com.example.bicycleshop.backend.entities.enums.OrderStatus;
 import com.example.bicycleshop.backend.entities.enums.ProductType;
 import com.example.bicycleshop.backend.services.CountryService;
 import com.example.bicycleshop.backend.services.CustomerDetailsService;
@@ -83,30 +84,38 @@ public class RequestController {
 	@PostMapping("/payment-details")
 	public String showPaymentDetailsPage(@ModelAttribute("customerDetails") CustomerDetailsDto form, Model model) {
 		Order order = orderService.saveNew(form);
-		
+		//tutaj powinien zostać wywołany serwis magazynowy InventoryService
 		model.addAttribute("order", order);
-		//model.addAttribute("paymentDetails", new PaymentDetailsDto()); //TODO
 		return "payment-details-view";
 	}
 	
 	@PostMapping("payment-successful")
-	public String showPaymentSuccessfulPage(@ModelAttribute("paymentDetails") PaymentDetailsDto form, Model model) {
-		
-		model.addAttribute("title", "Transakcja zrealizowana");
-		model.addAttribute("message", "Transakcja została zrealizowana");
+	public String showPaymentSuccessfulPage(@RequestParam("orderId") Long orderId, Model model) {
+		// ta metoda to jedynie 'zaślepka', w której powinien zostać wywołany niezależny serwis płatności PaymentService
+		orderService.updateOrderStatus(orderId, OrderStatus.PAID);
+		model.addAttribute("title", "Transakcja opłacona");
+		model.addAttribute("message", "Transakcja o numerze " + orderId + " została opłacona");
 		return "message-view";
 	}
 	
 	@RequestMapping("order-cancelled")
-	public String showCancelledPage(@RequestParam("session") String sessionId, Model model) {
+	public String showCancelledPage(@RequestParam("orderId") Long orderId, Model model) {
+		Long defaultOrderId = 0L;
 		model.addAttribute("title", "Transakcja anulowana");
-		model.addAttribute("message", "Transakcja została anulowana");
+		
+		if(!orderId.equals(defaultOrderId)){
+			orderService.updateOrderStatus(orderId, OrderStatus.CANCELLED);
+			model.addAttribute("message", "Transakcja o numerze " + orderId + " została anulowana");
+		} else {
+			model.addAttribute("message", "Transakcja została anulowana");
+		}
+
 		return "message-view";
 	}
 	
 	@GetMapping("/new-account")
 	public String showNewAccountPage(Model model) {
-		model.addAttribute("countries", countryService.getCountries());
+		model.addAttribute("countries", countryService.getHtmlListOfCountries());
 		return "new-account-view";
 	}
 	
